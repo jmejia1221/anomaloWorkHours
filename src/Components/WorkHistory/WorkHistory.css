@@ -1,0 +1,9 @@
+.WorkHistory {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.WorkHistory:after {
+    content: "";
+    width: 30%;
+}

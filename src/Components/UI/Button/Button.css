@@ -1,0 +1,22 @@
+.Button {
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 20px;
+    font-weight: bold;
+    background-color: transparent;
+    color: #222;
+    background-color: rgba(241, 241, 241, 0.8);
+}
+.Button.approved {
+    color: #1a9a72;
+    background-color: rgba(59, 217, 216, 0.2);
+}
+.Button.in-progress {
+    color: #4B8FDE;
+    background-color: rgba(75, 143, 222, 0.2);
+}
+.Button.waiting-info {
+    color: #999;
+    background-color: rgba(241, 241, 241, 0.8);
+}

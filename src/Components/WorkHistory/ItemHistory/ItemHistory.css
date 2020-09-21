@@ -1,0 +1,30 @@
+.ItemContainer {
+    width: 100%;
+    min-width: 200px;
+    min-height: 100px;
+}
+.ItemBox {
+    display: flex;
+    flex-shrink: 1;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+}
+.hours {
+    text-align: center;
+}
+.hoursNumber {
+    font-size: 2em;
+}
+.hoursText {
+    font-size: .8em;
+    font-weight: bold;
+}
+.dateStart,
+.dateEnd,
+.hoursNumber,
+.hoursText { 
+    display: block;
+}

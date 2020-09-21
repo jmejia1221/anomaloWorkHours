@@ -1,0 +1,16 @@
+.WeekItem {
+    display: flex;
+    width: 100%;
+}
+.WeekItemTicket {
+    border-radius: 3px;
+    padding: 5px 20px;
+    font-weight: bold;
+    color: #222;
+    font-size: .8em;
+    background-color: rgba(241, 241, 241, 0.8);
+}
+
+.WeekItemCheck {
+    cursor: pointer;
+}

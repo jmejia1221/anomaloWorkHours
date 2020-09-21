@@ -1,0 +1,27 @@
+.ListContent {
+    display: flex;
+    margin-bottom: 40px;
+}
+.WeekCheck,
+.WeekDescription,
+.WeekStatus,
+.WeekTicket {
+    padding: 5px;
+}
+.WeekCheck {
+    flex: 0 1 100px;
+    text-align: center;
+}
+.WeekDescription {
+    flex: 6 1 100px;
+    max-width: 400px;
+    overflow-wrap: break-word;
+}
+.WeekTicket {
+    text-align: center;
+    flex: 1 1 100px;
+}
+.WeekStatus {
+    text-align: center;
+    flex: 1 1 100px;
+}

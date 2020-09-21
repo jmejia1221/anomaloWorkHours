@@ -1,0 +1,36 @@
+.WeekControls {
+    display: flex;
+    align-items: center;
+    margin-bottom: 35px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.WeekControlsTitle {
+    margin-right: 10px;
+}
+
+.WeekControlsList > li,
+.WeekHoursDay {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 5px 10px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin: 0 5px;
+    min-width: 40px;
+    text-align: center;
+    display: inline-block;
+    transition: all .5s ease-in-out;
+}
+
+.WeekHoursDay {
+    color: #fff;
+    background-color: #8547C5;
+}
+
+.WeekControlsList > li.active,
+.WeekControlsList > li:hover {
+    color: #fff;
+    background-color: #8547C5;
+}

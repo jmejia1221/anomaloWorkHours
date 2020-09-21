@@ -1,0 +1,9 @@
+.WeekDayHours.active {
+    color: #fff;
+    background-color: #4B8FDE;
+}
+
+.WeekControlsList li.WeekDayHours:hover {
+    color: #222;
+    background-color: transparent;
+}

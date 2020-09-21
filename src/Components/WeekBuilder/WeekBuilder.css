@@ -1,0 +1,30 @@
+.WeekBuilderContent {
+    position: relative;
+}
+.WeekBuilderContent:after {
+    content: '';
+    border-bottom: 1px solid #eee;
+    width: 100%;
+    display: block;
+    margin: 80px 0;
+}
+.stitchings {
+    position: absolute;
+    left: calc(50% - 21px);
+    bottom: -9px;
+    margin: 0 auto;
+    display: inline-block;
+}
+.stitching {
+    background-color: #eee;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 50em;
+    margin: 0 2px;
+}
+.WeekBuilderName {
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 40px;
+}

@@ -1,25 +1,18 @@
 import React from 'react';
-import logo from './logo.svg';
+import Aux from './hoc/Aux/Aux';
+import Layout from './hoc/Layout/Layout';
+import HoursCreation from './Containers/HoursCreation/HoursCreation';
+import UsersFeed from './Containers/UsersFeed/UsersFeed';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Aux>
+      <Layout>
+        <HoursCreation />
+        {/* <UsersFeed /> */}
+      </Layout>
+    </Aux>
   );
 }
 

@@ -1,0 +1,32 @@
+.WeekHoursControl {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+.WeekHoursControl .WeekHoursDay {
+    max-height: 35px;
+    font-size: 1.4em;
+    padding: 0;
+    margin-left: 20px;
+    display: inline-block;
+}
+.controlHour {
+    width: 120px;
+    flex-wrap: wrap;
+    display: flex;
+    margin-left: 5px;
+}
+.controlHourInput {
+    width: 100%;
+}
+.controlHourTitle {
+    font-size: .8em;
+}
+.controlHourInput input {
+    max-width: 130px;
+    padding: 3px 10px;
+    border: 1px solid #eee;
+    font-size: 1.4em;
+    border-radius: 5px;
+    text-align: center;
+}
