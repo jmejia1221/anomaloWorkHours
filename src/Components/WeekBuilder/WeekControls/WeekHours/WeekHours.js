@@ -1,4 +1,8 @@
 import React from 'react';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import Button from '../../../UI/Button/Button';
 import WeekDay from '../WeekDay/WeekDay';
 
 import './WeekHours.css';
@@ -13,7 +17,9 @@ const weekHours = () => {
                         <input placeholder="Add hours" />
                     </div>
                 </div>
-                <span className="WeekHoursDay">+</span>
+                <Button class="WeekHoursDay" type="primary">
+                    <FontAwesomeIcon icon={faPlus} />
+                </Button>
             </div>
             <ul className="WeekControlsList">
                 {weekDays.map((day, i) => {

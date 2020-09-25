@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 import Aux from '../../hoc/Aux/Aux';
-import Panels from '../../Components/Panels/Panels';
-import LeftPanel from '../../Components/Panels/LeftPanel/LeftPanel';
-import RightPanel from '../../Components/Panels/RightPanel/RightPanel';
+import Panels from '../../Components/UI/Panels/Panels';
+import LeftPanel from '../../Components/UI/Panels/LeftPanel/LeftPanel';
+import RightPanel from '../../Components/UI/Panels/RightPanel/RightPanel';
 import WeekBuilder from '../../Components/WeekBuilder/WeekBuilder';
-import User from '../../Components/Users/Users';
+import Users from '../../Components/Users/Users';
 
 class UsersFeed extends Component {
     render() {
@@ -37,9 +37,10 @@ class UsersFeed extends Component {
                     <LeftPanel
                         title="Anomalo List"
                         type="history">
-                        <User users={users} />
+                        <Users users={users} />
                     </LeftPanel>
                     <RightPanel
+                        showFullScreenButton
                         title="Anomalos' Work Hours">
                         {weekListUser}
                     </RightPanel>

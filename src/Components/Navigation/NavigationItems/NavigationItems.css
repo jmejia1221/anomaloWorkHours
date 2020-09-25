@@ -1,0 +1,25 @@
+.NavContent {
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+}
+.NavContent .NavButton {
+    padding: 10px 15px;
+    font-size: 1.3em;
+}
+.NavContent .NavItems {
+    bottom: 50px;
+    position: absolute;
+    display: none;
+}
+.NavContent .ShowNavItems {
+    display: block;
+}
+.NavTooltip {
+    font-weight: bold;
+    position: absolute;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .1s ease-in-out;
+}

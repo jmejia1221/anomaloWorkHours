@@ -20,3 +20,13 @@
     color: #999;
     background-color: rgba(241, 241, 241, 0.8);
 }
+.Button.primary {
+    color: #fff;
+    padding: 10px;
+    background-color: #8547C4;
+    box-shadow: 2px 2px 8px #8547C4;
+}
+.ButtonIcon {
+    font-size: .9em;
+    display: inline-block;
+}

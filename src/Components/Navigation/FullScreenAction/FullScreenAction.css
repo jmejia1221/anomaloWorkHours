@@ -1,0 +1,15 @@
+.FullScreen {
+    top: 30px;
+    left: 30px;
+    position: absolute;
+    cursor: pointer;
+}
+.FullScreenIcon {
+    font-size: 1.6em;
+    margin-right: 10px;
+}
+.FullScreenText {
+    margin-top: 1px;
+    display: inline-block;
+    vertical-align: top;
+}

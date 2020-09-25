@@ -1,4 +1,5 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './Button.css';
 
@@ -22,13 +23,25 @@ const Button = (props) => {
                     break;
             }
             break;
+        case 'primary':
+            buttonClass += ' primary'
+            break;
         default:
             buttonClass += ''
             break;
     };
 
     return (
-        <button className={`Button ${buttonClass}`}>
+        <button
+            className={`Button ${buttonClass} ${props.class}`}
+            onClick={props.clicked}>
+            {props.icon && (
+                <span
+                    className="ButtonIcon"
+                    style={{marginRight: props.children ? '8px' : '0'}}>
+                    <FontAwesomeIcon icon={props.icon} />
+                </span>
+            )}
             {props.children}
         </button>
     );

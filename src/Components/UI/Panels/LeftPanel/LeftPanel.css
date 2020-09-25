@@ -1,0 +1,42 @@
+.leftPanleTitle {
+    color: #fff;
+    width: 100%;
+}
+.LeftPanelContainer {
+    width: 30%;
+    max-width: 300px;
+    height: 100%;
+    padding: 0 30px;
+    box-sizing: border-box;
+    transition: all 1s ease-out;
+}
+.HistoryContent {
+    max-height: 400px;
+}
+.showPanel {
+    animation: showLefPanel 1s forwards;
+
+}
+.hidePanel {
+    animation: hideLeftPanel 1s forwards;
+}
+@keyframes hideLeftPanel {
+    0% {
+        transform: translateX(0);
+    }
+    100%   {
+        transform: translateX(100%);
+        width: 0;
+        padding: 0;
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+@keyframes showLeftPanel {
+    0% {
+        transform: translateX(100%);
+    }
+    100%   {
+        transform: translateX(0);
+    }
+}

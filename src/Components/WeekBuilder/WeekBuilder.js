@@ -13,7 +13,9 @@ const WeekBuilder = (props) => (
             <h1 className="WeekBuilderName">
                 { props.name }
             </h1>
-            { props.weekControls && <Weekcontrols />}
+            { props.weekControls && (
+                <Weekcontrols addTask={props.addTask} />
+            )}
             <WeekList actions={props.actions} />
             { props.hoursListed && <HoursListed /> }
             { props.weekHours && <WeekHours /> }

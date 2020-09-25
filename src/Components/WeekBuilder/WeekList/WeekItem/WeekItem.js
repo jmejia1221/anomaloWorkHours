@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../../../UI/Button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import './WeekItem.css'
 
@@ -20,8 +20,9 @@ const WeekItem = (props) => (
         </span>
         { props.actions && (
             <span className="WeekCheck">
-                <span className="WeekItemCheck">
-                    <FontAwesomeIcon icon={faCog} />
+                <span className="WeekItemAction">
+                    <FontAwesomeIcon className='iconAction' icon={faEdit} />
+                    <FontAwesomeIcon className='iconAction' icon={faTrash} />
                 </span>
             </span>
         ) }

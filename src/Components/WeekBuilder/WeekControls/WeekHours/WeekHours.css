@@ -4,11 +4,8 @@
     margin: 20px 0;
 }
 .WeekHoursControl .WeekHoursDay {
-    max-height: 35px;
-    font-size: 1.4em;
-    padding: 0;
+    padding: 10px 15px;
     margin-left: 20px;
-    display: inline-block;
 }
 .controlHour {
     width: 120px;
@@ -24,9 +21,10 @@
 }
 .controlHourInput input {
     max-width: 130px;
-    padding: 3px 10px;
+    padding: 5px 10px;
     border: 1px solid #eee;
-    font-size: 1.4em;
+    font-size: 1.2em;
     border-radius: 5px;
     text-align: center;
+    box-shadow: 2px 2px 5px #eee;
 }

@@ -10,8 +10,7 @@
     margin-right: 10px;
 }
 
-.WeekControlsList > li,
-.WeekHoursDay {
+.WeekControlsList > li {
     cursor: pointer;
     font-weight: bold;
     padding: 5px 10px;
@@ -24,13 +23,11 @@
     transition: all .5s ease-in-out;
 }
 
-.WeekHoursDay {
-    color: #fff;
-    background-color: #8547C5;
-}
-
 .WeekControlsList > li.active,
 .WeekControlsList > li:hover {
     color: #fff;
     background-color: #8547C5;
+}
+.WeekControlsAdd {
+    margin-left: auto;
 }
