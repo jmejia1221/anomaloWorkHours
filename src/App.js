@@ -3,7 +3,7 @@ import Aux from './hoc/Aux/Aux';
 import Layout from './hoc/Layout/Layout';
 import HoursCreation from './Containers/HoursCreation/HoursCreation';
 import UsersFeed from './Containers/UsersFeed/UsersFeed';
-import Login from './Containers/Login/Login';
+import LoginPage from './Containers/Login/LoginPage';
 import './App.css';
 
 class App extends Component {
@@ -25,7 +25,7 @@ class App extends Component {
             hidePanel={this.state.togglePanel}
             togglePanel={this.togglePanelHandler} /> */}
           {/* <UsersFeed /> */}
-          <Login />
+          <LoginPage />
         </Layout>
       </Aux>
     );
