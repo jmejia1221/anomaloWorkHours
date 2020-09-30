@@ -5,11 +5,12 @@ import HoursCreation from './Containers/HoursCreation/HoursCreation';
 import UsersFeed from './Containers/UsersFeed/UsersFeed';
 import LoginPage from './Containers/Login/LoginPage';
 import './App.css';
+import TeamCreation from './Containers/TeamCreation/TeamCreation';
 
 class App extends Component {
   state = {
       togglePanel: false,
-      isLogin: false
+      isLoged: true
   }
 
   togglePanelHandler = () => {
@@ -20,12 +21,13 @@ class App extends Component {
     return (
       <Aux>
         <Layout
-          showMenu={this.state.isLogin}>
+          showMenu={this.state.isLoged}>
           {/* <HoursCreation
             hidePanel={this.state.togglePanel}
             togglePanel={this.togglePanelHandler} /> */}
           {/* <UsersFeed /> */}
-          <LoginPage />
+          {/* <LoginPage /> */}
+          <TeamCreation />
         </Layout>
       </Aux>
     );

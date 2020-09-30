@@ -32,6 +32,7 @@ class HoursCreation extends Component {
                         <WorkHistory />
                     </LeftPanel>
                     <RightPanel
+                        title="My Hours"
                         showFullScreenButton
                         hidePanel={this.props.hidePanel}
                         togglePanel={this.props.togglePanel}>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faHourglass, faSignOutAlt, faUserCircle, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faHourglass, faLayerGroup, faSignOutAlt, faUserCircle, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 import NavigationItem from './NavigationItem/NavigationItem';
 import Button from '../../UI/Button/Button';
@@ -36,6 +36,14 @@ class NavigationItems extends Component {
                     </NavigationItem>
                     <NavigationItem>
                         <FontAwesomeIcon
+                            title="Teams"
+                            icon={faLayerGroup} />
+                        <span className="NavTooltip">
+                            My Teams
+                        </span>
+                    </NavigationItem>
+                    <NavigationItem>
+                        <FontAwesomeIcon
                             title="Anomalos"
                             icon={faUsers} />
                         <span className="NavTooltip">
@@ -47,7 +55,7 @@ class NavigationItems extends Component {
                             title="Hours"
                             icon={faHourglass} />
                         <span className="NavTooltip">
-                            Hours
+                            My Hours
                         </span>
                     </NavigationItem>
                     <NavigationItem>

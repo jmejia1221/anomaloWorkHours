@@ -40,7 +40,7 @@ const SignUp = (props) => {
             <Button
                 class="LoginButton"
                 type="primary">
-                Login
+                Sign Up
                 <FontAwesomeIcon
                     className="LoginIconGo"
                     icon={faArrowCircleRight} />

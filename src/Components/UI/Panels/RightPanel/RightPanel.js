@@ -11,10 +11,11 @@ const RightPanel = (props) => {
                 <FullScreenAction
                     toggleCaret={props.hidePanel}
                     clicked={props.togglePanel}>
-                    {props.hidePanel ? 'Show Menu' : 'Full Screen'}
+                    { props.hidePanel ? 'Show Menu' : 'Full Screen' }
                 </FullScreenAction> }
-            <h1 className="RigthPanelTitle">{ props.title }</h1>
-            {props.children}
+            {   props.title &&
+                <h1 className="RigthPanelTitle">{ props.title }</h1> }
+            { props.children }
         </div>
     );
 }
