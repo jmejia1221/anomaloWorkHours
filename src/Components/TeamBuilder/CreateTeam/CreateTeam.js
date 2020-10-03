@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from '../../UI/Button/Button';
+import Input from '../../UI/Input/Input';
 
 import './CreateTeam.css';
 
@@ -10,10 +11,10 @@ const CreateTeam = () => {
             <h1>Create a team</h1>
             <div>
                 <div>
-                    <input placeholder="Team Name" />
+                    <Input placeholder="Team Name" />
                 </div>
-                <div>
-                    <input placeholder="Add user" />
+                <div className="CreateTeamUser">
+                    <Input placeholder="Add User" />
                 </div>
             </div>
             <div className="CreateTeamFooter">

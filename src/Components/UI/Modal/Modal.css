@@ -9,3 +9,10 @@
     padding: 30px;
     background-color: #fff;
 }
+.ModalCloseButton {
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.2em;
+}
