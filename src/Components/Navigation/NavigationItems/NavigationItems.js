@@ -26,7 +26,8 @@ class NavigationItems extends Component {
                         type="primary" />
                 </span>
                 <ul className={`${this.state.showItems ? 'ShowNavItems' : ''} NavItems`}>
-                    <NavigationItem>
+                    <NavigationItem
+                        path="/profile">
                         <FontAwesomeIcon
                             title="Profile"
                             icon={faUserCircle} />
@@ -34,7 +35,8 @@ class NavigationItems extends Component {
                             Profile
                         </span>
                     </NavigationItem>
-                    <NavigationItem>
+                    <NavigationItem
+                        path="/teams">
                         <FontAwesomeIcon
                             title="Teams"
                             icon={faLayerGroup} />
@@ -42,7 +44,8 @@ class NavigationItems extends Component {
                             My Teams
                         </span>
                     </NavigationItem>
-                    <NavigationItem>
+                    <NavigationItem
+                        path="/users-feed">
                         <FontAwesomeIcon
                             title="Anomalos"
                             icon={faUsers} />
@@ -50,7 +53,8 @@ class NavigationItems extends Component {
                             Anomalos
                         </span>
                     </NavigationItem>
-                    <NavigationItem>
+                    <NavigationItem
+                        path="/hours">
                         <FontAwesomeIcon
                             title="Hours"
                             icon={faHourglass} />

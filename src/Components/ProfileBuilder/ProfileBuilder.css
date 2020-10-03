@@ -1,0 +1,20 @@
+.Profile {
+    display: flex;
+    justify-content: space-between;
+}
+.ProfilePicture {
+    background-color: aliceblue;
+    width: 30%;
+    border-radius: 55px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 6em;
+    font-weight: bold;
+    transform: rotate(45deg);
+    max-width: 300px;
+}
+.ProfilePictureText {
+    transform: rotate(-45deg);
+}

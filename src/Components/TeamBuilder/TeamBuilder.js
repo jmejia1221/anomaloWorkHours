@@ -1,7 +1,5 @@
 import React from 'react';
-import { faLayerGroup, faPlus } from '@fortawesome/free-solid-svg-icons';
-
-import Button from '../UI/Button/Button';
+import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 
 import './TeamBuilder.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
