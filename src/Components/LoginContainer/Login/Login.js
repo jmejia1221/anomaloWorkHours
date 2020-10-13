@@ -17,6 +17,8 @@ const Login = (props) => {
                     className='LoginIcon'
                     icon={faUserAlt} />
                 <input
+                    name="username"
+                    onChange={props.inputChange}
                     className="LoginInput"
                     placeholder="User" />
             </div>
@@ -25,11 +27,14 @@ const Login = (props) => {
                     className='LoginIcon'
                     icon={faKey} />
                 <input
+                    name="password"
+                    onChange={props.inputChange}
                     className="LoginInput"
                     type="password"
                     placeholder="Password" />
             </div>
             <Button
+                clicked={props.loginHandler}
                 class="LoginButton"
                 type="primary">
                 Login

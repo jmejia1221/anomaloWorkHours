@@ -4,6 +4,7 @@ import { faBars, faHourglass, faLayerGroup, faSignOutAlt, faUserCircle, faUsers 
 
 import NavigationItem from './NavigationItem/NavigationItem';
 import Button from '../../UI/Button/Button';
+import fire from '../../../config/FireBase';
 
 import './NavigationItems.css';
 
@@ -15,6 +16,12 @@ class NavigationItems extends Component {
     menuHandler = () => {
         this.setState((prevState) => ({showItems: !prevState.showItems}));
     }
+
+    logout = () => {
+        fire.auth().signOut();
+        console.log('l', fire.auth().signOut())
+    }
+
     render() {
         return (
             <div className="NavContent">
@@ -54,7 +61,8 @@ class NavigationItems extends Component {
                         </span>
                     </NavigationItem>
                     <NavigationItem
-                        path="/hours">
+                        exact
+                        path="/">
                         <FontAwesomeIcon
                             title="Hours"
                             icon={faHourglass} />
@@ -62,7 +70,9 @@ class NavigationItems extends Component {
                             My Hours
                         </span>
                     </NavigationItem>
-                    <NavigationItem>
+                    <NavigationItem
+                        path="/login"
+                        clicked={this.logout}>
                         <FontAwesomeIcon
                             title="SignOut"
                             icon={faSignOutAlt} />

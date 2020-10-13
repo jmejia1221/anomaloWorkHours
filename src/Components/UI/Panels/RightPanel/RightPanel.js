@@ -7,7 +7,7 @@ import './RightPanel.css';
 const RightPanel = (props) => {
     return (
         <div className="RightPanelContent">
-            { props.showFullScreeButton &&
+            { props.showFullScreenButton &&
                 <FullScreenAction
                     toggleCaret={props.hidePanel}
                     clicked={props.togglePanel}>

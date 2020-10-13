@@ -17,6 +17,8 @@ const SignUp = (props) => {
                     className='LoginIcon'
                     icon={faUserAlt} />
                 <input
+                    name="username"
+                    onChange={props.inputChange}
                     className="LoginInput"
                     placeholder="Name" />
             </div>
@@ -25,6 +27,8 @@ const SignUp = (props) => {
                     className='LoginIcon'
                     icon={faEnvelope} />
                 <input
+                    name="email"
+                    onChange={props.inputChange}
                     className="LoginInput"
                     placeholder="Email" />
             </div>
@@ -33,11 +37,14 @@ const SignUp = (props) => {
                     className='LoginIcon'
                     icon={faKey} />
                 <input
+                    name="password"
+                    onChange={props.inputChange}
                     className="LoginInput"
                     type="password"
                     placeholder="Password" />
             </div>
             <Button
+                clicked={props.signInHandler}
                 class="LoginButton"
                 type="primary">
                 Sign Up

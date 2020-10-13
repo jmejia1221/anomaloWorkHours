@@ -18,3 +18,10 @@
     opacity: 1;
     visibility: visible;
 }
+.NavItem.active {
+    color: #fff;
+    background-color: #252941;
+}
+.NavItem.active:hover span {
+    color: #252941;
+}
