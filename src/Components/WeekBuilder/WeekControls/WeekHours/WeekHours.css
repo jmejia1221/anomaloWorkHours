@@ -1,23 +1,28 @@
 .WeekHoursControl {
     display: flex;
     align-items: center;
-    margin: 20px 0;
+    margin: 5px 0 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
 }
 .WeekHoursControl .WeekHoursDay {
     padding: 10px 15px;
     margin-left: 20px;
 }
+.controlHourTitle {
+    font-weight: bold;
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
 .controlHour {
     width: 120px;
     flex-wrap: wrap;
     display: flex;
-    margin-left: 5px;
+    margin-left: auto;
+    margin-right: 10px;
 }
 .controlHourInput {
     width: 100%;
-}
-.controlHourTitle {
-    font-size: .8em;
 }
 .controlHourInput input {
     max-width: 130px;
@@ -27,4 +32,5 @@
     border-radius: 5px;
     text-align: center;
     box-shadow: 2px 2px 5px #eee;
+    text-transform: uppercase;
 }

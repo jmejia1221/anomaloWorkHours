@@ -17,7 +17,7 @@ const Login = (props) => {
                     className='LoginIcon'
                     icon={faUserAlt} />
                 <input
-                    name="username"
+                    name="email"
                     onChange={props.inputChange}
                     className="LoginInput"
                     placeholder="User" />

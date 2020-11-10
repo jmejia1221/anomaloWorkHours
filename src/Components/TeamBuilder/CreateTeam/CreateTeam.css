@@ -5,3 +5,58 @@
 .CreateTeamUser {
     margin: 10px 0;
 }
+.addUserTitle {
+    text-transform: uppercase;
+    padding: 10px 20px;
+    margin: 25px 0 5px 0;
+    background: #f8f8f8;
+    border-radius: 5px;
+    position: relative;
+    z-index: 1;
+    border-bottom: 1px solid #252941;
+}
+.addUserContent {
+    border-radius: 5px;
+    max-height: 300px;
+    overflow: hidden;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-top: none;
+    margin-top: -10px;
+    padding: 5px;
+}
+.addUserContent .addUserSelected {
+    position: relative;
+    overflow: hidden;
+}
+.addUserContent .addUserSelected input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    left: -100px;
+}
+.addUserContent .addUserSelected label {
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: all .5s;
+    cursor: pointer;
+    display: block;
+    margin-top: 5px;
+    position: relative;
+}
+.addUserContent .addUserSelected label .checkIcon {
+    position: absolute;
+    right: 15px;
+    display: none;
+}
+.addUserContent .addUserSelected label:hover {
+    background-color: #f8f8f8;
+}
+.addUserContent .addUserSelected input[type="checkbox"]:checked + label {
+    background-color: #252941;
+    color: #fff;
+    border-radius: 5px;
+}
+.addUserContent .addUserSelected input[type="checkbox"]:checked + label .checkIcon {
+    display: inline-block;
+}

@@ -9,6 +9,9 @@ import WeekBuilder from '../../Components/WeekBuilder/WeekBuilder';
 import Modal from '../../Components/UI/Modal/Modal';
 import AddTask from '../../Components/WeekBuilder/WeekControls/AddTask/AddTask';
 
+import * as actions from '../../store/actions';
+import { connect } from 'react-redux';
+
 class HoursCreation extends Component {
     state = {
         showModal: false
@@ -21,6 +24,23 @@ class HoursCreation extends Component {
     cancelTaskHandler = () => {
         this.setState({showModal: false});
     }
+
+    createTaskHandler = () => {
+        const taskData = {
+            description: 'This is my first task',
+            ticket: 'OP-20100',
+            status: 'in-progress',
+            userId: this.props.userId,
+            id: new Date().getTime()
+        };
+        this.props.onCreateTask(taskData)
+    }
+
+    taskHandler = (event) => {
+        console.log(event.target.value);
+        let taskValue = event.target.value;
+    }
+
     render() {
         return(
             <Aux>
@@ -47,11 +67,25 @@ class HoursCreation extends Component {
                 <Modal
                     show={this.state.showModal}
                     closeModal={this.cancelTaskHandler}>
-                    <AddTask />
+                    <AddTask
+                        taskHandler={this.taskHandler}
+                        createTask={this.createTaskHandler} />
                 </Modal>
             </Aux>
         );
     }
 }
 
-export default HoursCreation;
+const mapStateToProps = state => {
+    return {
+        'userId': state.auth.userId
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onCreateTask: (taskData) => dispatch(actions.createTask(taskData))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HoursCreation);

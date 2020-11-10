@@ -64,7 +64,7 @@ const TeamBuilder = (props) => {
             ]
         }
     ];
-    let teamsMapping = teams.map(team => {
+    let teamsMapping = props.teams.map(team => {
         return <Team key={team.id} teamCreated={team} />
     })
     return (

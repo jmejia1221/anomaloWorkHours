@@ -6,8 +6,7 @@ const Input = (props) => {
     return (
         <input className="Input"
             {...props}
-            value={props.value}
-            onChange={props.changed} />
+            value={props.value} />
     );
 };
 

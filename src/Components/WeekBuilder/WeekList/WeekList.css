@@ -1,6 +1,13 @@
 .ListContent {
     display: flex;
     margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+.WeekHead {
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
 }
 .WeekCheck,
 .WeekDescription,
@@ -16,6 +23,7 @@
     flex: 6 1 100px;
     max-width: 400px;
     overflow-wrap: break-word;
+    padding-left: 15px;
 }
 .WeekTicket {
     text-align: center;

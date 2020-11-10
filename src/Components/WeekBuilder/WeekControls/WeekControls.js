@@ -9,19 +9,22 @@ const WeekControls = (props) => {
     const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
     return (
         <div className="WeekControls">
-            <strong className="WeekControlsTitle">Week</strong>
+            <strong className="WeekControlsTitle">Day</strong>
             <ul className="WeekControlsList">
                 {weekDays.map((day, i) => {
                     return <WeekDay type="days" key={i}>{day}</WeekDay>
                 })}
             </ul>
-            <Button
-                clicked={props.addTask}
-                icon={faPlus}
-                type="primary"
-                class="WeekControlsAdd">
-                Add task
-            </Button>
+            {
+                props.showTaskButton &&
+                <Button
+                    clicked={props.addTask}
+                    icon={faPlus}
+                    type="primary"
+                    class="WeekControlsAdd">
+                    Add Day's tasks
+                </Button>
+            }
         </div>
     );
 };

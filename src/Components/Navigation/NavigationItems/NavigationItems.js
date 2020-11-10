@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHourglass, faLayerGroup, faSignOutAlt, faUserCircle, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
 
 import NavigationItem from './NavigationItem/NavigationItem';
 import Button from '../../UI/Button/Button';
-import fire from '../../../config/FireBase';
+
+import * as actions from '../../../store/actions';
 
 import './NavigationItems.css';
 
@@ -18,8 +20,7 @@ class NavigationItems extends Component {
     }
 
     logout = () => {
-        fire.auth().signOut();
-        console.log('l', fire.auth().signOut())
+        this.props.onLogout();
     }
 
     render() {
@@ -34,7 +35,7 @@ class NavigationItems extends Component {
                 </span>
                 <ul className={`${this.state.showItems ? 'ShowNavItems' : ''} NavItems`}>
                     <NavigationItem
-                        path="/profile">
+                        path="/profile/1">
                         <FontAwesomeIcon
                             title="Profile"
                             icon={faUserCircle} />
@@ -86,4 +87,10 @@ class NavigationItems extends Component {
     }
 }
 
-export default NavigationItems;
+const mapDispatchToState = dispatch => {
+    return {
+        onLogout: () => dispatch(actions.logout())
+    };
+};
+
+export default connect(null, mapDispatchToState)(NavigationItems);

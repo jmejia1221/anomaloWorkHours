@@ -1,6 +1,11 @@
 .WeekItem {
     display: flex;
     width: 100%;
+    margin: 5px 0;
+    align-items: center;
+}
+.WeekItem:nth-child(even) {
+    background-color: #f8f8f8;
 }
 .WeekItemTicket {
     border-radius: 3px;
@@ -13,6 +18,7 @@
 .WeekItemAction {
     display: flex;
     padding: 0 15px;
+    height: 100%;
     color: #252941;
     justify-content: space-around;
 }

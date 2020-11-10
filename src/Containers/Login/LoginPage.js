@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import fire from '../../config/FireBase';
+import { connect } from 'react-redux';
 
 import Panels from '../../Components/UI/Panels/Panels';
 import RightPanel from '../../Components/UI/Panels/RightPanel/RightPanel';
 import LoginContainer from '../../Components/LoginContainer/LoginContainer';
 import Login from '../../Components/LoginContainer/Login/Login';
 import SignUp from '../../Components/LoginContainer/SignUp/SignUp';
+
+import * as actions from '../../store/actions';
 
 class LoginPage extends Component {
     state = {
@@ -28,27 +30,15 @@ class LoginPage extends Component {
     }
 
     loginHandler = (e) => {
-        fire.auth().signInWithEmailAndPassword(this.state.username, this.state.password)
-            .then(u => {
-                console.log('Successfully Logged in');
-                this.props.history.push('/');
-            })
-            .catch(err => {
-                console.log('Error: ', err.toString());
-            });
+        this.props.onAuth(this.state.email, this.state.password);
     }
 
     signInHandler = (e) => {
-        fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-            .then(u => {
-                console.log('Successfully Signed up');
-                fire.auth().currentUser.updateProfile({
-                    displayName: this.state.username
-                });
-            })
-            .catch(err => {
-                console.log('Error: ', err.toString())
-            })
+        this.props.onAuthSignIn(
+            this.state.email,
+            this.state.password,
+            this.state.username
+        );
     }
 
     render() {
@@ -78,4 +68,11 @@ class LoginPage extends Component {
     }
 }
 
-export default LoginPage;
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, password) => dispatch(actions.auth(email, password)),
+        onAuthSignIn: (email, password, userName) => dispatch(actions.authSignIn(email, password, userName))
+    };
+};
+
+export default connect(null, mapDispatchToProps)(LoginPage);
