@@ -7,12 +7,14 @@ export {
 
 export {
     createTask,
-    fetchTask
+    fetchTask,
+    fetchTaskDetail
 } from './hoursCreation';
 
 export {
     createTeam,
-    fetchTeams
+    fetchTeams,
+    fetchTeamDetails
 } from './teamCreation';
 
 export {

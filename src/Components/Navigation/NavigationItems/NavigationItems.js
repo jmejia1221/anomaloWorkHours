@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faHourglass, faLayerGroup, faSignOutAlt, faUserCircle, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faHourglass, faLayerGroup, faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 
 import NavigationItem from './NavigationItem/NavigationItem';
@@ -35,7 +35,7 @@ class NavigationItems extends Component {
                 </span>
                 <ul className={`${this.state.showItems ? 'ShowNavItems' : ''} NavItems`}>
                     <NavigationItem
-                        path="/profile/1">
+                        path="/profile">
                         <FontAwesomeIcon
                             title="Profile"
                             icon={faUserCircle} />
@@ -44,21 +44,13 @@ class NavigationItems extends Component {
                         </span>
                     </NavigationItem>
                     <NavigationItem
+                        exact
                         path="/teams">
                         <FontAwesomeIcon
                             title="Teams"
                             icon={faLayerGroup} />
                         <span className="NavTooltip">
                             My Teams
-                        </span>
-                    </NavigationItem>
-                    <NavigationItem
-                        path="/users-feed">
-                        <FontAwesomeIcon
-                            title="Anomalos"
-                            icon={faUsers} />
-                        <span className="NavTooltip">
-                            Anomalos
                         </span>
                     </NavigationItem>
                     <NavigationItem

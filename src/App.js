@@ -42,9 +42,9 @@ class App extends Component {
     if (this.props.isAuthenticated) {
       routes = (
           <Switch>
-            <Route path="/users-feed" component={UsersFeed} />
+            <Route path="/teams/:id" component={UsersFeed} />
             <Route path="/teams" component={TeamCreation} />
-            <Route path="/profile/:id" component={Profile} />
+            <Route path="/profile" component={Profile} />
             <Route path="/" exact render={
               () => (
                 <HoursCreation

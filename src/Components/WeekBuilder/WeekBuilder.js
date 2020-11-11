@@ -18,7 +18,9 @@ const WeekBuilder = (props) => (
                     showTaskButton
                     addTask={props.addTask} />
             )}
-            <WeekList actions={props.actions} />
+            <WeekList
+                updateUserId={props.updateUserId}
+                actions={props.actions} />
             { props.hoursListed && <HoursListed /> }
             { props.weekHours && <WeekHours /> }
             <span className="stitchings">

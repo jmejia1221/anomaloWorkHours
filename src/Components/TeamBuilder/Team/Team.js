@@ -1,4 +1,9 @@
+import { faEdit, faLink } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+
+import './Team.css'
 
 const Team = (props) => {
     let setUsers = [];
@@ -18,8 +23,27 @@ const Team = (props) => {
     if (setUsers.length > 4) {
         usersLeft = <span>+{ setUsers.length - 4}</span>;
     }
+
     return (
         <div className="TeamBuilderTeam">
+            <div className="teamLinks">
+                <span className="editLink">
+                    <FontAwesomeIcon
+                        className="editIcon"
+                        icon={faEdit} />
+                    Edit
+                </span>
+                <span
+                    onClick={props.visitTeamDetail}
+                    className="visitLink">
+                    <NavLink to={`/teams/${props.teamId}`}>
+                        <FontAwesomeIcon
+                            className="linkIcon"
+                            icon={faLink} />
+                        Visit
+                    </NavLink>
+                </span>
+            </div>
             <h3>{props.teamCreated.team}</h3>
             <div className="TeamBuilderUsers">
                 {

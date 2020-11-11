@@ -17,6 +17,10 @@ class HoursCreation extends Component {
         showModal: false
     }
 
+    componentDidMount() {
+        this.props.onFetchTask(this.props.userId);
+    }
+
     addTaskHandler = () => {
         this.setState({showModal: true});
     }
@@ -30,14 +34,13 @@ class HoursCreation extends Component {
             description: 'This is my first task',
             ticket: 'OP-20100',
             status: 'in-progress',
-            userId: this.props.userId,
-            id: new Date().getTime()
+            id: new Date().getTime(),
+            userId: this.props.userId
         };
-        this.props.onCreateTask(taskData)
+        this.props.onCreateTask(taskData);
     }
 
     taskHandler = (event) => {
-        console.log(event.target.value);
         let taskValue = event.target.value;
     }
 
@@ -57,6 +60,8 @@ class HoursCreation extends Component {
                         hidePanel={this.props.hidePanel}
                         togglePanel={this.props.togglePanel}>
                         <WeekBuilder
+                            updateUserId={this.props.userId}
+                            taskList={this.props.tasks}
                             addTask={this.addTaskHandler}
                             name="John Mejia"
                             weekControls
@@ -78,13 +83,15 @@ class HoursCreation extends Component {
 
 const mapStateToProps = state => {
     return {
-        'userId': state.auth.userId
+        tasks: state.hoursCreation.taskData,
+        userId: state.auth.userId
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onCreateTask: (taskData) => dispatch(actions.createTask(taskData))
+        onCreateTask: (taskData) => dispatch(actions.createTask(taskData)),
+        onFetchTask: (userId) => dispatch(actions.fetchTask(userId))
     }
 }
 

@@ -31,10 +31,10 @@
     text-transform: uppercase;
     font-weight: bold;
     transition: all .5s;
-    cursor: pointer;
     color: #999;
     margin-bottom: 15px;
     margin-right: 15px;
+    overflow: hidden;
 }
 .TeamBuilderTeam {
     position: relative;
@@ -53,6 +53,7 @@
     border: 4px dashed #eee;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 .TeamBuilderCreate:hover {
     color: #fff;

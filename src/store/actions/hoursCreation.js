@@ -25,9 +25,10 @@ export const createTaskError = (err) => {
 export const createTask = (taskData) => {
     return dispatch => {
         dispatch(startTask());
-        db.collection('tasks').doc(taskData.userId.toString()).collection('taskList').doc(taskData.id.toString()).set(taskData)
+        console.log('mytask', taskData)
+        db.collection('tasks').doc(taskData.userId.toString()).collection('taskList').add(taskData)
             .then(() => {
-                dispatch(createTaskSucces(taskData.userId, taskData))
+                dispatch(createTaskSucces(taskData.id, taskData))
             })
             .catch(err => {
                 dispatch(createTaskError(err));
@@ -46,7 +47,7 @@ export const fetchTaskStart = () => {
 export const fetchTaskSuccess = (taskData) => {
     return {
         type: actionTypes.FETCH_TASK_SUCCESS,
-        tasks: taskData
+        tasks: taskData,
     };
 };
 
@@ -59,7 +60,7 @@ export const fetchTaskFail = (err) => {
 
 export const fetchTask = (userId) => {
     return dispatch => {
-        dispatch(fetchTaskStart)
+        dispatch(fetchTaskStart());
         db.collection('tasks').doc(userId.toString()).collection('taskList').get()
             .then(querySnapshot => {
                 const fetchDataTask = [];
@@ -73,3 +74,43 @@ export const fetchTask = (userId) => {
             });
     };
 };
+
+// ======= //
+// TODO: create a new action and reducer for task details
+export const fetchTaskDetailStart = () => {
+    return {
+        type: actionTypes.FETCH_TASK_DETAIL_START
+    };
+};
+
+export const fetchTaskDetailSuccess = (taskData, userId) => {
+    return {
+        type: actionTypes.FETCH_TASK_DETAIL_SUCCESS,
+        tasks: taskData,
+        taskUserId: userId
+    };
+};
+
+export const fetchTaskDetailFail = (err) => {
+    return {
+        type: actionTypes.FETCH_TASK_DETAIL_FAIL,
+        error: err
+    };
+};
+
+export const fetchTaskDetail = (userId) => {
+    return dispatch => {
+        dispatch(fetchTaskStart());
+        db.collection('tasks').doc(userId.toString()).collection('taskList').get()
+            .then(querySnapshot => {
+                const fetchDataTask = [];
+                querySnapshot.forEach(function(res) {
+                    fetchDataTask.push(res.data());
+                });
+                dispatch(fetchTaskSuccess(fetchDataTask, userId));
+            })
+            .catch(err => {
+                dispatch(fetchTaskFail(err));
+            });
+    };
+}

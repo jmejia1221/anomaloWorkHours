@@ -10,10 +10,9 @@ import './WeekItem.css'
 
 class WeekItem extends Component  {
     componentDidMount() {
-        this.props.onFetchTask(this.props.userId);
+        this.props.onFetchTask(this.props.updateUserId);
     }
     render() {
-        console.log(this.props.tasks)
         let mapTasks = this.props.tasks.map(task => {
             return (
                 <li key={task.id} className="WeekItem">
@@ -51,8 +50,7 @@ class WeekItem extends Component  {
 
 const mapStateToProps = state => {
     return {
-        tasks: state.hoursCreation.taskData,
-        userId: state.auth.userId
+        tasks: state.hoursCreation.taskData
     };
 };
 

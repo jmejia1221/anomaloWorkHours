@@ -1,0 +1,45 @@
+.TeamBuilderTeam:hover > .teamLinks {
+    animation: showLinks .3s ease-out both;
+}
+.TeamBuilderTeam .teamLinks {
+    position: absolute;
+    background: #fff;
+    border-radius: 25px;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .5s;
+    opacity: 0;
+}
+.TeamBuilderTeam .teamLinks .editLink {
+    margin-right: 20px;
+}
+.TeamBuilderTeam .teamLinks .editLink, 
+.TeamBuilderTeam .teamLinks .visitLink > * {
+    color: #252941;
+    cursor: pointer;
+    text-decoration: none;
+}
+.TeamBuilderTeam .teamLinks .editLink:hover, 
+.TeamBuilderTeam .teamLinks .visitLink > *:hover {
+    color: #8547C4;
+}
+.teamLinks .editIcon,
+.teamLinks .linkIcon {
+    font-size: .8em;
+    margin-right: 5px;
+    vertical-align: baseline;
+}
+
+@keyframes showLinks {
+    0% {
+        transform: translateY(-230px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

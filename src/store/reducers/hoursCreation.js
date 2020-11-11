@@ -3,7 +3,8 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     loading: false,
     taskData: [],
-    error: null
+    error: null,
+    taskDataDetail: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,11 +32,25 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_TASK_START:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                taskData: []
             };
         case actionTypes.FETCH_TASK_SUCCESS:
             return {
                 ...state,
+                taskData: action.tasks,
+                loading: false
+            };
+        case actionTypes.FETCH_TASK_DETAIL_SUCCESS:
+            const taskDetails =  {
+                [action.taskUserId]: action.tasks
+            };
+            return {
+                ...state,
+                taskDataDetail: {
+                    ...state.taskDataDetail,
+                    ...taskDetails,
+                },
                 taskData: action.tasks,
                 loading: false
             };

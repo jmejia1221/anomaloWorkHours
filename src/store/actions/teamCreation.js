@@ -17,11 +17,14 @@ export const createTeamSuccess = (teamData) => {
 
 export const createTeam = (teamData) => {
     return dispatch => {
-        dispatch(createTeamStart);
+        dispatch(createTeamStart());
         db.collection('teams').add(teamData)
-            .then(() => {
-                console.log('team Successfully created');
-                dispatch(createTeamSuccess(teamData))
+            .then((doc) => {
+                const newTeamData = {
+                    ...teamData,
+                    id: doc.id
+                }
+                dispatch(createTeamSuccess(newTeamData));
             })
             .catch(err => {
                 console.log('err');
@@ -29,7 +32,7 @@ export const createTeam = (teamData) => {
     };
 };
 
-// =========
+// ========= Team
 
 export const fetchTeamsStart = () => {
     return {
@@ -51,9 +54,43 @@ export const fetchTeams = (userId) => {
             .then(snap => {
                 let fetchTeamData = [];
                 snap.forEach(doc => {
-                    fetchTeamData.push(doc.data());
+                    const dataWithId = {
+                        ...doc.data(),
+                        id: doc.id
+                    };
+                    fetchTeamData.push(dataWithId);
                 });
                 dispatch(fetchTeamSuccess(fetchTeamData));
+            })
+            .catch(err => {
+                console.log('err', err);
+            });
+    };
+};
+
+// ========= Team Details
+
+export const fetchTeamDetailsStart = () => {
+    return {
+        type: actionTypes.FETCH_TEAM_DETAILS_START
+    };
+};
+
+export const fetchTeamDetailsSuccess = (teamDetails, id) => {
+    return {
+        type: actionTypes.FETCH_TEAM_DETAILS_SUCCESS,
+        teamDetails: teamDetails,
+        userId: id
+    };
+};
+
+export const fetchTeamDetails = (teamId) => {
+    return dispatch => {
+        dispatch(fetchTeamDetailsStart());
+        db.collection('teams').doc(teamId).get()
+            .then(doc => {
+                console.log('details', doc.data())
+                dispatch(fetchTeamDetailsSuccess(doc.data(), doc.data().userId));
             })
             .catch(err => {
                 console.log('err', err)

@@ -15,7 +15,7 @@ const WeekList = (props) => (
             ) }
         </header>
         <ul className="ListContent">
-            <WeekItem actions={props.actions} />
+            <WeekItem updateUserId={props.updateUserId} actions={props.actions} />
         </ul>
     </Aux>
 );
