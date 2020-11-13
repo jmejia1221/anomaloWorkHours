@@ -24,6 +24,29 @@ export const logout = () => {
     };
 };
 
+export const fetchCurrentUserSuccess = (user) => {
+    return {
+        type: actionTypes.AUTH_CURRENT_USER,
+        currentUser: user
+    };
+}
+
+export const fetchCurrentUser = () => {
+    return dispatch => {
+        let currentUser = null;
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                currentUser = user // User is signed in.
+                console.log('yeah', currentUser)
+                dispatch(fetchCurrentUserSuccess(user))
+
+            } else {
+            // No user is signed in.
+            }
+        });
+    };
+};
+
 export const checkAuthState = () => {
     return dispatch => {
         const token = localStorage.getItem('token');
@@ -54,25 +77,23 @@ export const authCreateUser = (email, name, userId) => {
 };
 
 export const auth = (email, password, isSignIn) => {
-    console.log(email, password)
     return dispatch => {
         dispatch(authStart);
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(u => {
-                console.log('Successfully Logged in');
-                // this.props.history.push('/');
                 firebase.auth().currentUser.getIdTokenResult()
                     .then((idTokenResult) => {
                         const token = idTokenResult.token;
                         const userId = u.user.uid;
                         const name = u.user.displayName;
-
+                        console.log('name', name)
                         localStorage.setItem('token', token);
                         localStorage.setItem('userId', userId)
 
                         if (isSignIn) dispatch(authCreateUser(email, name, userId));
 
                         dispatch(login(token, userId))
+                        console.log('Successfully Logged in');
                     })
                     .catch((error) => {
                         console.log(error);
@@ -90,11 +111,12 @@ export const authSignIn = (email, password, name) => {
     return dispatch => {
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(u => {
-                console.log('Successfully Signed up');
+                const isSignIn = true;
+
                 firebase.auth().currentUser.updateProfile({
                     displayName: name
                 });
-                dispatch(auth(email, password, true));
+                dispatch(auth(email, password, isSignIn));
             })
             .catch(err => {
                 console.log('Error: ', err.toString())

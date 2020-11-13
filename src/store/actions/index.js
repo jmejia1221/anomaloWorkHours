@@ -2,7 +2,8 @@ export {
     auth,
     logout,
     checkAuthState,
-    authSignIn
+    authSignIn,
+    fetchCurrentUser
 } from './auth';
 
 export {

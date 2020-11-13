@@ -5,6 +5,7 @@ const initialState = {
     userId: null,
     error: null,
     loading: false,
+    currentUser: null
 };
 
 const authStart = (state, action) => {
@@ -41,12 +42,21 @@ const authLogout = (state, action) => {
     };
 };
 
+const fetchCurrentUser = (state, action) => {
+    return {
+        ...state,
+        currentUser: action.currentUser
+    };
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.AUTH_START:
             return authStart(state, action);
         case actionTypes.AUTH_SUCCESS:
             return authSuccess(state, action);
+        case actionTypes.AUTH_CURRENT_USER:
+            return fetchCurrentUser(state, action);
         case actionTypes.AUTH_FAIL:
             return authFail(state, action);
         case actionTypes.AUTH_LOGOUT:

@@ -25,7 +25,7 @@ class App extends Component {
   }
   
   componentDidMount() {
-    this.props.onTryLogin()
+    this.props.onTryLogin();
   }
 
   render() {
@@ -67,15 +67,15 @@ class App extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onTryLogin: () => dispatch(actions.checkAuthState())
-  };
-};
-
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.token
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryLogin: () => dispatch(actions.checkAuthState())
   };
 };
 

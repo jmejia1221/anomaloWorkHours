@@ -19,6 +19,7 @@ class HoursCreation extends Component {
 
     componentDidMount() {
         this.props.onFetchTask(this.props.userId);
+        this.props.onFetchCurrentUser();
     }
 
     addTaskHandler = () => {
@@ -45,6 +46,12 @@ class HoursCreation extends Component {
     // }
 
     render() {
+        let currentUserName = null;
+
+        if (this.props.user) {
+            currentUserName = this.props.user.displayName;
+        }
+
         return(
             <Aux>
                 <Panels>
@@ -62,7 +69,7 @@ class HoursCreation extends Component {
                         <WeekBuilder
                             taskDetails={this.props.tasks}
                             addTask={this.addTaskHandler}
-                            name="John Mejia"
+                            name={currentUserName}
                             weekControls
                             weekHours
                             actions />
@@ -83,14 +90,16 @@ class HoursCreation extends Component {
 const mapStateToProps = state => {
     return {
         tasks: state.hoursCreation.taskData,
-        userId: state.auth.userId
+        userId: state.auth.userId,
+        user: state.auth.currentUser
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         onCreateTask: (taskData) => dispatch(actions.createTask(taskData)),
-        onFetchTask: (userId) => dispatch(actions.fetchTask(userId))
+        onFetchTask: (userId) => dispatch(actions.fetchTask(userId)),
+        onFetchCurrentUser: () => dispatch(actions.fetchCurrentUser())
     }
 }
 

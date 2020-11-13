@@ -2,6 +2,7 @@ export const AUTH_START = 'AUTH_START';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
+export const AUTH_CURRENT_USER = 'AUTH_CURRENT_USER';
 
 export const CREATE_TASK_START = 'CREATE_TASK_START';
 export const CREATE_TASK_SUCCESS = 'CREATE_TASK_SUCCESS';

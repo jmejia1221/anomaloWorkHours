@@ -2,11 +2,11 @@ import React from 'react';
 
 import './ProfileBuilder.css';
 
-const ProfileBuilder = () => {
+const ProfileBuilder = (props) => {
     return (
         <div className="Profile">
             <div className="ProfilePicture">
-                <span className="ProfilePictureText">JM</span>
+                <span className="ProfilePictureText">{props.userName}</span>
             </div>
             {/* <h1>John Mejia</h1> */}
         </div>
