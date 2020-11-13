@@ -1,12 +1,14 @@
 import React from 'react';
 
 import User from './User/User';
+import { SpellText } from '../../Shared/Utility';
 
 import './Users.css';
 
 const Users = (props) => {
     let listUsers = props.users.map((user, i) => {
-        return <User key={i} name={user.name} />
+        let SpelledName = SpellText(user.name);
+        return <User key={i} name={SpelledName} />
     });
     return (
         <ul className="Users">
