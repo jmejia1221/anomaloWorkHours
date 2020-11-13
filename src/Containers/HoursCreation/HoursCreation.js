@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Aux from '../../hoc/Aux/Aux';
 import Panels from '../../Components/UI/Panels/Panels';
@@ -10,7 +11,6 @@ import Modal from '../../Components/UI/Modal/Modal';
 import AddTask from '../../Components/WeekBuilder/WeekControls/AddTask/AddTask';
 
 import * as actions from '../../store/actions';
-import { connect } from 'react-redux';
 
 class HoursCreation extends Component {
     state = {
@@ -40,9 +40,9 @@ class HoursCreation extends Component {
         this.props.onCreateTask(taskData);
     }
 
-    taskHandler = (event) => {
-        let taskValue = event.target.value;
-    }
+    // taskHandler = (event) => {
+    //     let taskValue = event.target.value;
+    // }
 
     render() {
         return(
@@ -60,8 +60,7 @@ class HoursCreation extends Component {
                         hidePanel={this.props.hidePanel}
                         togglePanel={this.props.togglePanel}>
                         <WeekBuilder
-                            updateUserId={this.props.userId}
-                            taskList={this.props.tasks}
+                            taskDetails={this.props.tasks}
                             addTask={this.addTaskHandler}
                             name="John Mejia"
                             weekControls

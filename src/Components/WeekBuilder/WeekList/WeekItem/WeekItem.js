@@ -1,19 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Button from '../../../UI/Button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { connect } from 'react-redux';
 
-import * as actions from '../../../../store/actions';
 
 import './WeekItem.css'
 
-class WeekItem extends Component  {
-    componentDidMount() {
-        this.props.onFetchTask(this.props.updateUserId);
-    }
-    render() {
-        let mapTasks = this.props.tasks.map(task => {
+const WeekItem = (props) => {
+    let tasks = props.taskDetails;
+    let mapTasks = null
+
+    if (tasks !== undefined && tasks.length) {
+        mapTasks = tasks.map(task => {
             return (
                 <li key={task.id} className="WeekItem">
                     <span className="WeekDescription">{task.description}</span>
@@ -27,7 +25,7 @@ class WeekItem extends Component  {
                             {task.status}
                         </Button>
                     </span>
-                    { this.props.actions && (
+                    { props.actions && (
                         <span className="WeekCheck">
                             <span className="WeekItemAction">
                                 <FontAwesomeIcon className='iconAction' icon={faEdit} />
@@ -39,25 +37,14 @@ class WeekItem extends Component  {
             )
             
         })
-        // let mapTasks = null;
-        return (
-            <>
-                {mapTasks}
-            </>
-        )
     }
+
+    return (
+        <>
+            {mapTasks}
+        </>
+    )
 };
 
-const mapStateToProps = state => {
-    return {
-        tasks: state.hoursCreation.taskData
-    };
-};
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onFetchTask: (userId) => dispatch(actions.fetchTask(userId))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(WeekItem);
+export default WeekItem;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 import Aux from '../../hoc/Aux/Aux';
@@ -10,7 +10,7 @@ import Users from '../../Components/Users/Users';
 
 import * as actions from '../../store/actions';
 
-class UsersFeed extends Component {
+class UsersFeed extends PureComponent {
     componentDidMount() {
         const teamParams = this.props.match.params;
         if (teamParams.id === 'undefined') {
@@ -19,17 +19,37 @@ class UsersFeed extends Component {
             this.props.onFetchTeamDetails(teamParams.id);
         }
     }
+
+    componentDidUpdate(prevProps) {
+        console.log('prev', prevProps)
+        if (this.props.teamUsers !== prevProps.teamUsers) {
+            this.fetchTaskDetails();
+        }
+    }
+
+    fetchTaskDetails = () => {
+        if (this.props.teamUsers.length) {
+            this.props.teamUsers.forEach(user => {
+                console.log('hereuser', user)
+                this.props.onFetchTaskDetails(user.userId);
+            });
+        }
+    }
+
     render() {
         let weekListUser = null;
         let renderUsers = null;
-        if (!this.props.loading && this.props.teamDetails.length) {
-            const userList = this.props.teamDetails[0];
 
-            if (userList !== undefined && userList.users !== undefined) {
-                renderUsers = <Users users={userList.users} />;
-                weekListUser = userList.users.map(user => {
+        if (!this.props.loading && this.props.teamUsers.length && this.props.taskDetails) {
+            const userList = this.props.teamUsers;
+            if (userList !== undefined && userList !== undefined) {
+                renderUsers = <Users users={userList} />;
+                weekListUser = userList.map(user => {
+                    console.log('checking', user.userId)
                     return (
                         <WeekBuilder
+                            isTaskDetails
+                            taskDetails={this.props.taskDetails[user.userId]}
                             updateUserId={user.userId}
                             key={user.userId}
                             name={user.name}
@@ -38,6 +58,7 @@ class UsersFeed extends Component {
                 });
             }
         }
+
         return(
             <Aux>
                 <Panels>
@@ -62,13 +83,16 @@ const mapStateToProps = state => {
         teams: state.teamCreation.teams,
         loading: state.teamCreation.loading,
         teamDetails: state.teamCreation.teamDetails,
-        tasksDetail: state.hoursCreation.taskDataDetail
+        teamUsers: state.teamCreation.teamUsers,
+        taskDetails: state.hoursCreation.taskDataDetail
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchTeamDetails: (teamId) => dispatch(actions.fetchTeamDetails(teamId))
+        onFetchTeamDetails: (teamId) => dispatch(actions.fetchTeamDetails(teamId)),
+        onFetchTaskDetails: (userId) => dispatch(actions.fetchTaskDetail(userId)),
+        onFetchTask: (userId) => dispatch(actions.fetchTask(userId))
     };
 };
 

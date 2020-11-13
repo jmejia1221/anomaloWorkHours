@@ -4,7 +4,7 @@ const initialState = {
     loading: false,
     teams: [],
     teamDetails: [],
-    userDetails: null
+    teamUsers: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -35,24 +35,18 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: true,
-                teamDetails: []
+                teamDetails: [],
+                teamUsers: []
             };
         case actionTypes.FETCH_TEAM_DETAILS_SUCCESS:
-            console.log(action.teamDetails.users)
             const userDetails = action.teamDetails.users.map(team => {
-                return {
-                    [team.userId]: team
-                }
+                return team;
             });
             return {
                 ...state,
                 loading: false,
                 teamDetails: state.teamDetails.concat(action.teamDetails),
-                // teamDetails: {
-                //     ...state,
-                //     teamDetails: state.teamDetails.concat(action.teamDetails),
-                //     // userDetails
-                // },
+                teamUsers: state.teamUsers.concat(userDetails)
             };
         default:
             return state;

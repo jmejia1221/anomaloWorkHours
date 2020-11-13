@@ -33,12 +33,19 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: true,
-                taskData: []
+                taskData: [],
+                taskDataDetail: null
             };
         case actionTypes.FETCH_TASK_SUCCESS:
             return {
                 ...state,
                 taskData: action.tasks,
+                loading: false
+            };
+        case actionTypes.FETCH_TASK_DETAIL_START:
+            return {
+                ...state,
+                taskDataDetail: null,
                 loading: false
             };
         case actionTypes.FETCH_TASK_DETAIL_SUCCESS:
@@ -51,7 +58,6 @@ const reducer = (state = initialState, action) => {
                     ...state.taskDataDetail,
                     ...taskDetails,
                 },
-                taskData: action.tasks,
                 loading: false
             };
         case actionTypes.FETCH_TASK_FAIL:

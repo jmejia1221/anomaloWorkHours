@@ -100,17 +100,19 @@ export const fetchTaskDetailFail = (err) => {
 
 export const fetchTaskDetail = (userId) => {
     return dispatch => {
-        dispatch(fetchTaskStart());
+        dispatch(fetchTaskDetailStart());
         db.collection('tasks').doc(userId.toString()).collection('taskList').get()
             .then(querySnapshot => {
                 const fetchDataTask = [];
                 querySnapshot.forEach(function(res) {
                     fetchDataTask.push(res.data());
+                console.log('fetchtasks', res.data())
                 });
-                dispatch(fetchTaskSuccess(fetchDataTask, userId));
+                dispatch(fetchTaskDetailSuccess(fetchDataTask, userId));
             })
             .catch(err => {
-                dispatch(fetchTaskFail(err));
+                console.log(err)
+                dispatch(fetchTaskDetailFail(err));
             });
     };
 }

@@ -4,20 +4,24 @@ import Aux from '../../../hoc/Aux/Aux';
 
 import './WeekList.css';
 
-const WeekList = (props) => (
-    <Aux>
-        <header className="WeekHead">
-            <strong className="WeekDescription">Description</strong>
-            <strong className="WeekTicket"># Ticket</strong>
-            <strong className="WeekStatus">Status</strong>
-            { props.actions && (
-                <strong className="WeekCheck">Actions</strong>
-            ) }
-        </header>
-        <ul className="ListContent">
-            <WeekItem updateUserId={props.updateUserId} actions={props.actions} />
-        </ul>
-    </Aux>
-);
+const WeekList = (props) => {
+    return (
+        <Aux>
+            <header className="WeekHead">
+                <strong className="WeekDescription">Description</strong>
+                <strong className="WeekTicket"># Ticket</strong>
+                <strong className="WeekStatus">Status</strong>
+                { props.actions && (
+                    <strong className="WeekCheck">Actions</strong>
+                ) }
+            </header>
+            <ul className="ListContent">
+                <WeekItem
+                    taskDetails={props.taskDetails}
+                    actions={props.actions} />
+            </ul>
+        </Aux>
+    );
+};
 
 export default WeekList;
