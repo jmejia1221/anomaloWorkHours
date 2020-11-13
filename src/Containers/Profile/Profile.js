@@ -14,9 +14,10 @@ class Profile extends Component {
 
     render() {
         let userName = null;
+        let userEmail = null;
         if (this.props.currentUser) {
             userName = this.props.currentUser.displayName;
-            console.log(userName)
+            userEmail = this.props.currentUser.email;
         }
 
         return (
@@ -25,6 +26,7 @@ class Profile extends Component {
                     title="My Profile">
                     {this.props.userName}
                     <ProfileBuilder 
+                        email={userEmail}
                         userName={userName} />
                 </RightPanel>
             </Panels>

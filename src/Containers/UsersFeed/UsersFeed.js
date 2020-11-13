@@ -45,7 +45,6 @@ class UsersFeed extends PureComponent {
             if (userList !== undefined && userList !== undefined) {
                 renderUsers = <Users users={userList} />;
                 weekListUser = userList.map(user => {
-                    console.log('checking', user.userId)
                     return (
                         <WeekBuilder
                             isTaskDetails

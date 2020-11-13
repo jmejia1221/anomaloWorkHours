@@ -1,6 +1,6 @@
 .Profile {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 .ProfilePicture {
     background-color: aliceblue;
@@ -17,4 +17,18 @@
 }
 .ProfilePictureText {
     transform: rotate(-45deg);
+}
+.ProfileInfo {
+    text-align: center;
+    width: 55%;
+    border-radius: 15px;
+}
+.ProfileInfo .ProfileName {
+    font-size: 6em;
+    font-weight: bold;
+}
+.ProfileInfo .ProfileEmail {
+    font-size: 1.2em;
+    font-weight: bold;
+    font-style: italic;
 }

@@ -33,13 +33,9 @@ export const fetchCurrentUserSuccess = (user) => {
 
 export const fetchCurrentUser = () => {
     return dispatch => {
-        let currentUser = null;
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
-                currentUser = user // User is signed in.
-                console.log('yeah', currentUser)
                 dispatch(fetchCurrentUserSuccess(user))
-
             } else {
             // No user is signed in.
             }

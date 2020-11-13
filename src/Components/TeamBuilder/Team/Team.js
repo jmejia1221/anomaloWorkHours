@@ -1,27 +1,25 @@
+import React from 'react';
 import { faEdit, faLink } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
 import { NavLink } from 'react-router-dom';
+
+import { SpellText } from '../../../Shared/Utility';
 
 import './Team.css'
 
 const Team = (props) => {
     let setUsers = [];
     let usersLeft = null;
+    let sliceUsers = null;
     if (props.teamCreated.users) {
-        props.teamCreated.users.forEach(user => {
-            let splitName = user.name.split(' ');
-            let getLetter = splitName.map(name => {
-                return name.substring(0, 1);
-            });
-            setUsers.push(getLetter.join(''));
+        sliceUsers = props.teamCreated.users.slice(0, 4);
+        setUsers = sliceUsers.map(user => {
+            return SpellText(user.name);
         });
     }
 
-    let sliceUsers = setUsers.slice(0, 4);
-
-    if (setUsers.length > 4) {
-        usersLeft = <span>+{ setUsers.length - 4}</span>;
+    if (props.teamCreated.users.length > 4) {
+        usersLeft = <span>+{ props.teamCreated.users.length - 4}</span>;
     }
 
     return (
@@ -47,7 +45,7 @@ const Team = (props) => {
             <h3>{props.teamCreated.team}</h3>
             <div className="TeamBuilderUsers">
                 {
-                    sliceUsers.map((user, i) => (
+                    setUsers.map((user, i) => (
                         <span key={i}>{user}</span>
                     ))
                 }
