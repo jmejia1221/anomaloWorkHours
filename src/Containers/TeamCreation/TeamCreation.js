@@ -13,7 +13,9 @@ class TeamCreation extends Component {
     state = {
         showModal: false,
         teamName: '',
-        usersSelected: []
+        usersSelected: [],
+        teamDetails: [],
+        isUpdateTeam: false
     }
 
     componentDidMount() {
@@ -21,12 +23,18 @@ class TeamCreation extends Component {
     }
 
     openNewTeamModal = () => {
-        this.setState({showModal: true});
+        this.setState({
+            showModal: true,
+            isUpdateTeam: false
+        });
     }
 
     closeNewTeamModal = () => {
         this.setState({showModal: false});
         this.props.onRemoveUsers();
+        this.setState({
+            usersSelected: []
+        });
     }
 
     inputChangeHandler = (e) => {
@@ -69,6 +77,14 @@ class TeamCreation extends Component {
         }
     }
 
+    openUpdateModal = (teamId) => {
+        this.props.onFetchTeamDetails(teamId);
+        this.openNewTeamModal();
+        this.setState({
+            isUpdateTeam: true
+        })
+    }
+
     render() {
         return (
             <>
@@ -76,6 +92,7 @@ class TeamCreation extends Component {
                     <RightPanel
                         title="My Teams">
                         <TeamBuilder
+                            openUpdateModal={this.openUpdateModal}
                             teams={this.props.teams}
                             addNewTeam={this.openNewTeamModal} />
                     </RightPanel>
@@ -84,6 +101,9 @@ class TeamCreation extends Component {
                     show={this.state.showModal}
                     closeModal={this.closeNewTeamModal}>
                     <CreateTeam
+                        isUpdateTeam={this.state.isUpdateTeam}
+                        teamDetails={this.props.teamDetails}
+                        usersSelected={this.state.usersSelected}
                         addTeamUserHandler={this.addTeamUserHandler}
                         showUsersHandler={this.showUsersHandler}
                         users={this.props.users}
@@ -100,7 +120,8 @@ const mapStateToProps = state => {
         token: state.auth.token,
         userId: state.auth.userId,
         users: state.users.users,
-        teams: state.teamCreation.teams
+        teams: state.teamCreation.teams,
+        teamDetails: state.teamCreation.teamDetails
     };
 };
 
@@ -109,7 +130,8 @@ const mapDispatchToProps = dispatch => {
         onCreateTeam: (teamData, token) => dispatch(actions.createTeam(teamData, token)),
         onFetchUsers: (token, textValue) => dispatch(actions.fetchUsers(token, textValue)),
         onRemoveUsers: () => dispatch(actions.removeUsers()),
-        onFetchTeams: (userId) => dispatch(actions.fetchTeams(userId))
+        onFetchTeams: (userId) => dispatch(actions.fetchTeams(userId)),
+        onFetchTeamDetails: (teamId) => dispatch(actions.fetchTeamDetails(teamId))
     };
 };
 

@@ -9,6 +9,7 @@ const TeamBuilder = (props) => {
     let teamsMapping = props.teams.map(team => {
         return (
             <Team
+                openUpdateModal={props.openUpdateModal}
                 key={team.id}
                 teamId={team.id}
                 teamCreated={team} />

@@ -25,15 +25,15 @@ const Team = (props) => {
     return (
         <div className="TeamBuilderTeam">
             <div className="teamLinks">
-                <span className="editLink">
+                <span
+                    onClick={() => props.openUpdateModal(props.teamId)}
+                    className="editLink">
                     <FontAwesomeIcon
                         className="editIcon"
                         icon={faEdit} />
                     Edit
                 </span>
-                <span
-                    onClick={props.visitTeamDetail}
-                    className="visitLink">
+                <span className="visitLink">
                     <NavLink to={`/teams/${props.teamId}`}>
                         <FontAwesomeIcon
                             className="linkIcon"
