@@ -23,11 +23,19 @@
     transition: all .5s ease-in-out;
 }
 
+.WeekControlsList > li.done {
+    color: #1a9a72;
+    background-color: rgba(59, 217, 216, 0.2);
+    border: 1px solid #1a9a72; 
+}
+
 .WeekControlsList > li.active,
 .WeekControlsList > li:hover {
     color: #fff;
     background-color: #8547C5;
+    border: 1px solid #8547C5; 
 }
+
 .WeekControlsAdd {
     margin-left: auto;
     text-transform: uppercase;

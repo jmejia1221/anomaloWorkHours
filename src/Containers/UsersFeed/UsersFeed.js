@@ -11,6 +11,12 @@ import Users from '../../Components/Users/Users';
 import * as actions from '../../store/actions';
 
 class UsersFeed extends PureComponent {
+    state = {
+        showModal: false,
+        currentDate: Math.ceil((new Date().getTime()  / (1000 * 60 * 60 * 24) + 2)),
+        currentDay: new Date().getDay()
+    }
+
     componentDidMount() {
         const teamParams = this.props.match.params;
         if (teamParams.id === 'undefined') {
@@ -21,7 +27,6 @@ class UsersFeed extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        console.log('prev', prevProps)
         if (this.props.teamUsers !== prevProps.teamUsers) {
             this.fetchTaskDetails();
         }
@@ -30,8 +35,7 @@ class UsersFeed extends PureComponent {
     fetchTaskDetails = () => {
         if (this.props.teamUsers.length) {
             this.props.teamUsers.forEach(user => {
-                console.log('hereuser', user)
-                this.props.onFetchTaskDetails(user.userId);
+                this.props.onFetchTaskDetails(user.userId, this.state.currentDate, this.state.currentDay);
             });
         }
     }
@@ -90,8 +94,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onFetchTeamDetails: (teamId) => dispatch(actions.fetchTeamDetails(teamId)),
-        onFetchTaskDetails: (userId) => dispatch(actions.fetchTaskDetail(userId)),
-        onFetchTask: (userId) => dispatch(actions.fetchTask(userId))
+        onFetchTaskDetails: (userId, week, weekDay) => dispatch(actions.fetchTaskDetail(userId, week, weekDay))
     };
 };
 

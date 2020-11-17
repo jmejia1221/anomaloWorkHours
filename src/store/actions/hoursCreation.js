@@ -11,7 +11,7 @@ export const createTaskSucces = (id, taskData) => {
     return {
         type: actionTypes.CREATE_TASK_SUCCESS,
         taskId: id,
-        taskData: taskData
+        weekTasks: taskData
     };
 };
 
@@ -98,15 +98,15 @@ export const fetchTaskDetailFail = (err) => {
     };
 };
 
-export const fetchTaskDetail = (userId) => {
+export const fetchTaskDetail = (userId, week, weekDay) => {
     return dispatch => {
+        const weekComputed = week - weekDay;
         dispatch(fetchTaskDetailStart());
-        db.collection('tasks').doc(userId.toString()).collection('taskList').get()
+        db.collection('tasks').doc(userId.toString()).collection('taskList').where('week', '==', weekComputed).where('weekDay', '==', weekDay).limit(50).get()
             .then(querySnapshot => {
                 const fetchDataTask = [];
                 querySnapshot.forEach(function(res) {
                     fetchDataTask.push(res.data());
-                console.log('fetchtasks', res.data())
                 });
                 dispatch(fetchTaskDetailSuccess(fetchDataTask, userId));
             })
@@ -116,3 +116,33 @@ export const fetchTaskDetail = (userId) => {
             });
     };
 }
+
+// Week tasks
+export const fetchWeekTasksStart = () => {
+    return {
+        type: actionTypes.FETCH_WEEK_TASKS_START
+    };
+};
+
+export const fetchWeekTasksSuccess = (weekTasks) => {
+    return {
+        type: actionTypes.FETCH_WEEK_TASKS_SUCCESS,
+        weekTasks 
+    }
+}
+
+export const fetchWeekTasks = (userId, week, weekDay) => {
+    return dispatch => {
+        const weekComputed = week - weekDay;
+        dispatch(fetchWeekTasksStart());
+        db.collection('tasks').doc(userId.toString()).collection('taskList').where('week', '==', weekComputed).where('weekDay', '==', weekDay).limit(50).get()
+            .then(querySnapshot => {
+                const fetchDataTask = [];
+                querySnapshot.forEach(function(res) {
+                    fetchDataTask.push(res.data());
+                });
+                console.log(fetchDataTask)
+                dispatch(fetchWeekTasksSuccess(fetchDataTask));
+            });
+    };
+};

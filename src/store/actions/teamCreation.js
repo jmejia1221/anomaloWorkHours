@@ -89,7 +89,6 @@ export const fetchTeamDetails = (teamId) => {
         dispatch(fetchTeamDetailsStart());
         db.collection('teams').doc(teamId).get()
             .then(doc => {
-                console.log('details', doc.data())
                 dispatch(fetchTeamDetailsSuccess(doc.data(), doc.data().userId));
             })
             .catch(err => {

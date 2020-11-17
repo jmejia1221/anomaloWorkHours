@@ -4,7 +4,8 @@ const initialState = {
     loading: false,
     taskData: [],
     error: null,
-    taskDataDetail: null
+    taskDataDetail: null,
+    weekTasks: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,13 +17,13 @@ const reducer = (state = initialState, action) => {
             };
         case actionTypes.CREATE_TASK_SUCCESS:
             const newTask = {
-                ...action.taskData,
+                ...action.weekTasks,
                 id: action.taskId
             };
             return {
                 ...state,
                 loading: false,
-                taskData: state.taskData.concat(newTask)
+                weekTasks: state.weekTasks.concat(newTask)
             };
         case actionTypes.CREATE_TASK_FAIL:
             return {
@@ -64,6 +65,18 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.error
+            };
+        case actionTypes.FETCH_WEEK_TASKS_START:
+            return {
+                ...state,
+                weekTasks: [],
+                loading: true
+            };
+        case actionTypes.FETCH_WEEK_TASKS_SUCCESS:
+            return {
+                ...state,
+                weekTasks: action.weekTasks,
+                loading: false
             };
     
         default:

@@ -16,6 +16,9 @@ const WeekBuilder = (props) => {
                 </h1>
                 { props.weekControls && (
                     <Weekcontrols
+                        selectedDay={props.selectedDay}
+                        weekDayHandler={props.weekDayHandler}
+                        taskDetails={props.taskDetails}
                         showTaskButton
                         addTask={props.addTask} />
                 )}
