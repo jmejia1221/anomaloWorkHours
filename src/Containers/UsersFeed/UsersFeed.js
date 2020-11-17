@@ -13,7 +13,7 @@ import * as actions from '../../store/actions';
 class UsersFeed extends PureComponent {
     state = {
         showModal: false,
-        currentDate: Math.ceil((new Date().getTime()  / (1000 * 60 * 60 * 24) + 2)),
+        currentDate: Math.ceil((new Date().getTime()  / (1000 * 60 * 60 * 24))),
         currentDay: new Date().getDay()
     }
 

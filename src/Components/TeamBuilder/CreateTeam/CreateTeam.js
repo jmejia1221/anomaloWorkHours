@@ -8,10 +8,6 @@ import Input from '../../UI/Input/Input';
 import './CreateTeam.css';
 
 class CreateTeam extends Component  {
-    state = {
-        teamName: ''
-    }
-
     componentDidMount() {
         this.props.showUsersHandler();
     }
@@ -20,10 +16,6 @@ class CreateTeam extends Component  {
         if (this.props.teamDetails !== prevProps.teamDetails) {
             this.props.teamDetails[0].users.forEach(u => {
                 this.props.addTeamUserHandler(u);
-            });
-
-            this.setState({
-                teamName: this.props.teamDetails[0].team
             });
         }
     }
@@ -69,12 +61,12 @@ class CreateTeam extends Component  {
         return (
             <div className="CreateTeamContent">
                 <h1>
-                    {this.props.isUpdateTeam ? `Update ${this.state.teamName}` : 'Create a team'}
+                    {this.props.isUpdateTeam ? `Update ${this.props.defaultTeamName}` : 'Create a team'}
                 </h1>
                 <div>
                     <div>
                         <Input
-                            value={this.state.teamName}
+                            value={this.props.defaultTeamName}
                             name="teamName"
                             onChange={this.props.inputChanged}
                             placeholder="Team Name" />
@@ -85,11 +77,21 @@ class CreateTeam extends Component  {
                     </div>
                 </div>
                 <div className="CreateTeamFooter">
-                    <Button
-                        type="primary"
-                        clicked={this.props.createTeam}>
-                        {this.props.isUpdateTeam ? 'Update' : 'Create'}
-                    </Button>
+                    {
+                        this.props.isUpdateTeam ? (
+                            <Button
+                                type="primary"
+                                clicked={this.props.updateTeam}>
+                                Update
+                            </Button>
+                        ) : (
+                            <Button
+                                type="primary"
+                                clicked={this.props.createTeam}>
+                                Create
+                            </Button>
+                        )
+                    }
                 </div>
             </div>
         )

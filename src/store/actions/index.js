@@ -16,7 +16,8 @@ export {
 export {
     createTeam,
     fetchTeams,
-    fetchTeamDetails
+    fetchTeamDetails,
+    updateTeam
 } from './teamCreation';
 
 export {

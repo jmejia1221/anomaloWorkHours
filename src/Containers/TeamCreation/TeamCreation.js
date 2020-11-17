@@ -22,6 +22,16 @@ class TeamCreation extends Component {
         this.props.onFetchTeams(this.props.userId);
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.teamDetails !== prevProps.teamDetails) {
+            if (this.props.teamDetails.length) {
+                this.setState({
+                    teamName: this.props.teamDetails[0].team
+                });
+            }
+        }
+    }
+
     openNewTeamModal = () => {
         this.setState({
             showModal: true,
@@ -50,7 +60,18 @@ class TeamCreation extends Component {
             userId: this.props.userId,
             id: new Date().getTime()
         };
-        this.props.onCreateTeam(teamData, this.props.token);
+        this.props.onCreateTeam(teamData);
+        this.closeNewTeamModal();
+    }
+
+    updateTeamHandler = () => {
+        let teamData = {
+            team: this.state.teamName,
+            users: this.state.usersSelected,
+            userId: this.props.userId,
+            id: this.props.teamDetails[0].id
+        };
+        this.props.onUpdateTeam(teamData);
         this.closeNewTeamModal();
     }
 
@@ -82,7 +103,7 @@ class TeamCreation extends Component {
         this.openNewTeamModal();
         this.setState({
             isUpdateTeam: true
-        })
+        });
     }
 
     render() {
@@ -101,6 +122,8 @@ class TeamCreation extends Component {
                     show={this.state.showModal}
                     closeModal={this.closeNewTeamModal}>
                     <CreateTeam
+                        defaultTeamName={this.state.teamName}
+                        updateTeam={this.updateTeamHandler}
                         isUpdateTeam={this.state.isUpdateTeam}
                         teamDetails={this.props.teamDetails}
                         usersSelected={this.state.usersSelected}
@@ -127,11 +150,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onCreateTeam: (teamData, token) => dispatch(actions.createTeam(teamData, token)),
+        onCreateTeam: (teamData) => dispatch(actions.createTeam(teamData)),
         onFetchUsers: (token, textValue) => dispatch(actions.fetchUsers(token, textValue)),
         onRemoveUsers: () => dispatch(actions.removeUsers()),
         onFetchTeams: (userId) => dispatch(actions.fetchTeams(userId)),
-        onFetchTeamDetails: (teamId) => dispatch(actions.fetchTeamDetails(teamId))
+        onFetchTeamDetails: (teamId) => dispatch(actions.fetchTeamDetails(teamId)),
+        onUpdateTeam: (teamData) => dispatch(actions.updateTeam(teamData))
     };
 };
 

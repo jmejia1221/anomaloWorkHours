@@ -18,16 +18,40 @@ export const createTeamSuccess = (teamData) => {
 export const createTeam = (teamData) => {
     return dispatch => {
         dispatch(createTeamStart());
-        db.collection('teams').add(teamData)
-            .then((doc) => {
-                const newTeamData = {
-                    ...teamData,
-                    id: doc.id
-                }
-                dispatch(createTeamSuccess(newTeamData));
+        db.collection('teams').doc(teamData.id.toString()).set(teamData)
+            .then(() => {
+                dispatch(createTeamSuccess(teamData));
             })
             .catch(err => {
-                console.log('err');
+                console.log('err', err);
+            });
+    };
+};
+
+// ========= Update team
+
+export const updateTeamStart = () => {
+    return {
+        type:  actionTypes.UPDATE_TEAM_START
+    };
+};
+
+export const updateTeamSuccess = (teamData) => {
+    return {
+        type: actionTypes.UPDATE_TEAM_SUCCESS,
+        teams: teamData
+    };
+};
+
+export const updateTeam = (teamData) => {
+    return dispatch => {
+        dispatch(createTeamStart());
+        db.collection('teams').doc(teamData.id.toString()).update(teamData)
+            .then(() => {
+                dispatch(fetchTeams(teamData.userId))
+            })
+            .catch(err => {
+                console.log('err', err);
             });
     };
 };
@@ -87,7 +111,7 @@ export const fetchTeamDetailsSuccess = (teamDetails, id) => {
 export const fetchTeamDetails = (teamId) => {
     return dispatch => {
         dispatch(fetchTeamDetailsStart());
-        db.collection('teams').doc(teamId).get()
+        db.collection('teams').doc(teamId.toString()).get()
             .then(doc => {
                 dispatch(fetchTeamDetailsSuccess(doc.data(), doc.data().userId));
             })
