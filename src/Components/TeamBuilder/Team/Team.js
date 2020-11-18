@@ -1,5 +1,5 @@
 import React from 'react';
-import { faEdit, faLink } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faLink, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
 
@@ -40,6 +40,13 @@ const Team = (props) => {
                             icon={faLink} />
                         Visit
                     </NavLink>
+                </span>
+                <span
+                    onClick={() => props.removeTeam(props.teamId)}
+                    className="editLink">
+                    <FontAwesomeIcon
+                        className="editIcon"
+                        icon={faTrash} />
                 </span>
             </div>
             <h3>{props.teamCreated.team}</h3>

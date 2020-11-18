@@ -9,13 +9,11 @@
     height: 100%;
     z-index: 1;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     transition: all .5s;
     opacity: 0;
-}
-.TeamBuilderTeam .teamLinks .editLink {
-    margin-right: 20px;
+    padding: 0 10px;
 }
 .TeamBuilderTeam .teamLinks .editLink, 
 .TeamBuilderTeam .teamLinks .visitLink > * {

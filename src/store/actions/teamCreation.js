@@ -28,6 +28,21 @@ export const createTeam = (teamData) => {
     };
 };
 
+// ========= Remove team
+
+export const removeTeam = (userId, teamId) => {
+    return dispatch => {
+        db.collection('teams').doc(teamId.toString()).delete()
+            .then(() => {
+                console.log('Successfully deleted');
+                dispatch(fetchTeams(userId))
+            })
+            .catch(err => {
+                console.log('error', err)
+            });
+    };
+};
+
 // ========= Update team
 
 export const updateTeamStart = () => {

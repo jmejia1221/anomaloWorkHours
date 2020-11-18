@@ -106,6 +106,10 @@ class TeamCreation extends Component {
         });
     }
 
+    removeTeamHandler = (teamId) => {
+        this.props.onRemoveTeam(this.props.userId, teamId);
+    }
+
     render() {
         return (
             <>
@@ -113,6 +117,7 @@ class TeamCreation extends Component {
                     <RightPanel
                         title="My Teams">
                         <TeamBuilder
+                            removeTeam={this.removeTeamHandler}
                             openUpdateModal={this.openUpdateModal}
                             teams={this.props.teams}
                             addNewTeam={this.openNewTeamModal} />
@@ -155,7 +160,8 @@ const mapDispatchToProps = dispatch => {
         onRemoveUsers: () => dispatch(actions.removeUsers()),
         onFetchTeams: (userId) => dispatch(actions.fetchTeams(userId)),
         onFetchTeamDetails: (teamId) => dispatch(actions.fetchTeamDetails(teamId)),
-        onUpdateTeam: (teamData) => dispatch(actions.updateTeam(teamData))
+        onUpdateTeam: (teamData) => dispatch(actions.updateTeam(teamData)),
+        onRemoveTeam: (userId, teamId) => dispatch(actions.removeTeam(userId, teamId))
     };
 };
 
