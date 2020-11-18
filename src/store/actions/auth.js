@@ -82,7 +82,6 @@ export const auth = (email, password, isSignIn) => {
                         const token = idTokenResult.token;
                         const userId = u.user.uid;
                         const name = u.user.displayName;
-                        console.log('name', name)
                         localStorage.setItem('token', token);
                         localStorage.setItem('userId', userId)
 

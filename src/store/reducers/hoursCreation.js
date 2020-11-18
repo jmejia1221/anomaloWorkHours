@@ -30,24 +30,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 error: action.error
             };
-        case actionTypes.FETCH_TASK_START:
-            return {
-                ...state,
-                loading: true,
-                taskData: [],
-                taskDataDetail: null
-            };
-        case actionTypes.FETCH_TASK_SUCCESS:
-            return {
-                ...state,
-                taskData: action.tasks,
-                loading: false
-            };
         case actionTypes.FETCH_TASK_DETAIL_START:
             return {
                 ...state,
                 taskDataDetail: null,
-                loading: false
+                loading: true
             };
         case actionTypes.FETCH_TASK_DETAIL_SUCCESS:
             const taskDetails =  {
@@ -60,11 +47,6 @@ const reducer = (state = initialState, action) => {
                     ...taskDetails,
                 },
                 loading: false
-            };
-        case actionTypes.FETCH_TASK_FAIL:
-            return {
-                ...state,
-                error: action.error
             };
         case actionTypes.FETCH_WEEK_TASKS_START:
             return {

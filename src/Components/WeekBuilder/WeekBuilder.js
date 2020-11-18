@@ -23,6 +23,7 @@ const WeekBuilder = (props) => {
                         addTask={props.addTask} />
                 )}
                 <WeekList
+                    removeTaskHandler={props.removeTaskHandler}
                     taskDetails={props.taskDetails}
                     actions={props.actions} />
                 { props.hoursListed && <HoursListed /> }

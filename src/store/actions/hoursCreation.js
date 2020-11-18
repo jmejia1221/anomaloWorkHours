@@ -25,7 +25,6 @@ export const createTaskError = (err) => {
 export const createTask = (taskData) => {
     return dispatch => {
         dispatch(startTask());
-        console.log('mytask', taskData)
         db.collection('tasks').doc(taskData.userId.toString()).collection('taskList').add(taskData)
             .then(() => {
                 dispatch(createTaskSucces(taskData.id, taskData))
@@ -36,41 +35,33 @@ export const createTask = (taskData) => {
     };
 };
 
-// ========== //
+// ========= Delete task
 
-export const fetchTaskStart = () => {
+export const deleteTaskSucces = (id, taskData) => {
     return {
-        type: actionTypes.FETCH_TASK_START
+        type: actionTypes.CREATE_TASK_SUCCESS,
+        taskId: id,
+        weekTasks: taskData
     };
 };
 
-export const fetchTaskSuccess = (taskData) => {
+export const deleteTaskError = (err) => {
     return {
-        type: actionTypes.FETCH_TASK_SUCCESS,
-        tasks: taskData,
-    };
-};
-
-export const fetchTaskFail = (err) => {
-    return {
-        type: actionTypes.FETCH_TASK_FAIL,
+        type: actionTypes.CREATE_TASK_FAIL,
         error: err
     };
 };
 
-export const fetchTask = (userId) => {
+export const deleteTask = (userId, taskId, time) => {
     return dispatch => {
-        dispatch(fetchTaskStart());
-        db.collection('tasks').doc(userId.toString()).collection('taskList').get()
-            .then(querySnapshot => {
-                const fetchDataTask = [];
-                querySnapshot.forEach(function(res) {
-                    fetchDataTask.push(res.data());
-                });
-                dispatch(fetchTaskSuccess(fetchDataTask));
+        dispatch(startTask());
+        db.collection('tasks').doc(userId.toString()).collection('taskList').doc(taskId.toString()).delete()
+            .then((doc) => {
+                console.log('Successfully deleted');
+                dispatch(fetchWeekTasks(userId, time.currentDate, time.currentDay));
             })
             .catch(err => {
-                dispatch(fetchTaskFail(err));
+                console.log('error')
             });
     };
 };
@@ -139,9 +130,12 @@ export const fetchWeekTasks = (userId, week, weekDay) => {
             .then(querySnapshot => {
                 const fetchDataTask = [];
                 querySnapshot.forEach(function(res) {
-                    fetchDataTask.push(res.data());
+                    const addingId = {
+                        ...res.data(),
+                        taskId: res.id
+                    }
+                    fetchDataTask.push(addingId);
                 });
-                console.log(fetchDataTask)
                 dispatch(fetchWeekTasksSuccess(fetchDataTask));
             });
     };

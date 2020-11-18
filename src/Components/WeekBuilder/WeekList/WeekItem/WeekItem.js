@@ -29,7 +29,10 @@ const WeekItem = (props) => {
                         <span className="WeekCheck">
                             <span className="WeekItemAction">
                                 <FontAwesomeIcon className='iconAction' icon={faEdit} />
-                                <FontAwesomeIcon className='iconAction' icon={faTrash} />
+                                <FontAwesomeIcon
+                                    onClick={() => props.removeTaskHandler(task.taskId)}
+                                    className='iconAction'
+                                    icon={faTrash} />
                             </span>
                         </span>
                     ) }

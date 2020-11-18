@@ -21,7 +21,6 @@ class HoursCreation extends Component {
     }
 
     componentDidMount() {
-        // this.props.onFetchTask(this.props.userId);
         this.props.onFetchCurrentUser();
         this.props.onFetchWeekTasks(
             this.props.userId,
@@ -78,6 +77,13 @@ class HoursCreation extends Component {
     // taskHandler = (event) => {
     //     let taskValue = event.target.value;
     // }
+    removeTaskHandler = (taskId) => {
+        let time = {
+            currentDate: this.state.currentDate,
+            currentDay: this.state.currentDay
+        }
+        this.props.onDeleteTask(this.props.userId, taskId, time);
+    }
 
     render() {
         let currentUserName = null;
@@ -101,6 +107,7 @@ class HoursCreation extends Component {
                         hidePanel={this.props.hidePanel}
                         togglePanel={this.props.togglePanel}>
                         <WeekBuilder
+                            removeTaskHandler={this.removeTaskHandler}
                             selectedDay={this.state.selectedDay}
                             weekDayHandler={this.requestWeekDay}
                             taskDetails={this.props.weekTasks}
@@ -125,7 +132,6 @@ class HoursCreation extends Component {
 
 const mapStateToProps = state => {
     return {
-        // tasks: state.hoursCreation.taskData,
         weekTasks: state.hoursCreation.weekTasks,
         userId: state.auth.userId,
         user: state.auth.currentUser
@@ -135,9 +141,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onCreateTask: (taskData) => dispatch(actions.createTask(taskData)),
-        // onFetchTask: (userId) => dispatch(actions.fetchTask(userId)),
         onFetchCurrentUser: () => dispatch(actions.fetchCurrentUser()),
-        onFetchWeekTasks: (userId, currentDate, currentDay) => dispatch(actions.fetchWeekTasks(userId, currentDate, currentDay))
+        onFetchWeekTasks: (userId, currentDate, currentDay) => dispatch(actions.fetchWeekTasks(userId, currentDate, currentDay)),
+        onDeleteTask: (userId, taskId, time) => dispatch(actions.deleteTask(userId, taskId, time))
     }
 }
 

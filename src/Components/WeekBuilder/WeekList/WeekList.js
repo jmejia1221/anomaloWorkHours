@@ -17,6 +17,7 @@ const WeekList = (props) => {
             </header>
             <ul className="ListContent">
                 <WeekItem
+                    removeTaskHandler={props.removeTaskHandler}
                     taskDetails={props.taskDetails}
                     actions={props.actions} />
             </ul>
