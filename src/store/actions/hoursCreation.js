@@ -27,7 +27,9 @@ export const createTask = (taskData) => {
         dispatch(startTask());
         db.collection('tasks').doc(taskData.userId.toString()).collection('taskList').add(taskData)
             .then(() => {
-                dispatch(createTaskSucces(taskData.id, taskData))
+                if (taskData.weekDay === new Date().getDay()) {
+                    dispatch(createTaskSucces(taskData.id, taskData))
+                }
             })
             .catch(err => {
                 dispatch(createTaskError(err));

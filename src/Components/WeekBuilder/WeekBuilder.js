@@ -4,6 +4,7 @@ import Weekcontrols from './WeekControls/WeekControls';
 import WeekList from './WeekList/WeekList';
 import WeekHours from './WeekControls/WeekHours/WeekHours';
 import HoursListed from './WeekControls/HoursListed/HoursListed';
+import Button from '../UI/Button/Button';
 
 import './WeekBuilder.css';
 
@@ -26,8 +27,25 @@ const WeekBuilder = (props) => {
                     removeTaskHandler={props.removeTaskHandler}
                     taskDetails={props.taskDetails}
                     actions={props.actions} />
+
                 { props.hoursListed && <HoursListed /> }
+
+                <div className="WeekHoursControl">
+                    <span className="controlHourTitle">Working Time</span>
+                    <div className="controlHour">
+                        <div className="controlHourInput">
+                            <input placeholder="Add Time" />
+                        </div>
+                        <Button
+                            clicked={props.createTask}
+                            type="primary">
+                            Add
+                        </Button>
+                    </div>
+                </div>
+
                 { props.weekHours && <WeekHours /> }
+
                 <span className="stitchings">
                     <span className="stitching"></span>
                     <span className="stitching"></span>

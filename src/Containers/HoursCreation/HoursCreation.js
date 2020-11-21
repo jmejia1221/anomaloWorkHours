@@ -17,7 +17,18 @@ class HoursCreation extends Component {
         showModal: false,
         currentDate: Math.ceil((new Date().getTime()  / (1000 * 60 * 60 * 24))),
         currentDay: new Date().getDay(),
-        selectedDay: ''
+        weekDayValue: {
+            'SU': 0,
+            'M': 1,
+            'TU': 2,
+            'W': 3,
+            'TH': 4,
+            'F': 5,
+            'SA': 6
+        },
+        selectedDay: '',
+        task: '',
+        taskDaySelected: ''
     }
 
     componentDidMount() {
@@ -36,47 +47,60 @@ class HoursCreation extends Component {
         this.setState({showModal: true});
     }
 
-    cancelTaskHandler = () => {
+    closeTaskHandler = () => {
         this.setState({showModal: false});
+        this.setState({
+            taskDaySelected: ''
+        });
     }
 
     createTaskHandler = () => {
+        let ticket = this.state.task.match(/\(([^)]+)\)/) ?
+            this.state.task.match(/\(([^)]+)\)/)[1].trim() :
+            '';
+        let status = this.state.task.match(/\[(.*?)\]/) ?
+            this.state.task.match(/\[(.*?)\]/)[1].trim() :
+            '';
+        let description = this.state.task.match(/([^(]*)/g)[0].trim();
+
         const taskData = {
-            description: 'This is my second task',
-            ticket: 'OP-20115',
-            status: 'in-progress',
+            description: description,
+            ticket: ticket,
+            status: status,
             id: new Date().getTime(),
             userId: this.props.userId,
-            week: this.state.currentDate - this.state.currentDay,
-            weekDay: this.state.currentDay,
-            hours: 7
+            week: this.state.currentDate - this.state.taskDaySelected,
+            weekDay: this.state.taskDaySelected
         };
         this.props.onCreateTask(taskData);
+        this.closeTaskHandler();
     }
 
-    requestWeekDay = (week, weekDay) => {
-        const weekDayValue = {
-            'SU': 0,
-            'M': 1,
-            'TU': 2,
-            'W': 3,
-            'TH': 4,
-            'F': 5,
-            'SA': 6
-        };
+    requestWeekDay = (day) => {
         this.setState({
-            selectedDay: weekDayValue[week]
+            selectedDay: this.state.weekDayValue[day]
         });
         this.props.onFetchWeekTasks(
             this.props.userId,
             this.state.currentDate,
-            weekDayValue[week]
+            this.state.weekDayValue[day]
         );
     }
 
-    // taskHandler = (event) => {
-    //     let taskValue = event.target.value;
-    // }
+    selectDayHandler = (day) => {
+        this.setState({
+            taskDaySelected: this.state.weekDayValue[day]
+        });
+    }
+
+    taskHandler = (event) => {
+        let taskValue = event.target.value;
+
+        this.setState({
+            task: taskValue 
+        });
+    }
+
     removeTaskHandler = (taskId) => {
         let time = {
             currentDate: this.state.currentDate,
@@ -120,8 +144,10 @@ class HoursCreation extends Component {
                 </Panels>
                 <Modal
                     show={this.state.showModal}
-                    closeModal={this.cancelTaskHandler}>
+                    closeModal={this.closeTaskHandler}>
                     <AddTask
+                        taskDaySelected={this.state.taskDaySelected}
+                        weekDayHandler={this.selectDayHandler}
                         taskHandler={this.taskHandler}
                         createTask={this.createTaskHandler} />
                 </Modal>

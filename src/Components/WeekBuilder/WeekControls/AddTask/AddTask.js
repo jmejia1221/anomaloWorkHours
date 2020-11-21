@@ -9,18 +9,13 @@ const AddTask = (props) => {
     return (
         <div>
             <h1 className="TaskTitle">Add task</h1>
-            <Weekcontrols showTaskButton={false} />
+            <Weekcontrols
+                selectedDay={props.taskDaySelected}
+                weekDayHandler={props.weekDayHandler}
+                showTaskButton={false} />
             <span className="TaskExample">E.g. Description task (OP-#Ticket) [status]</span>
             <div className="TaskDescription">
                 <textarea onChange={props.taskHandler}></textarea>
-            </div>
-            <div className="WeekHoursControl">
-                <span className="controlHourTitle">Working Time</span>
-                <div className="controlHour">
-                    <div className="controlHourInput">
-                        <input placeholder="Add Time" />
-                    </div>
-                </div>
             </div>
             <div className="TaskFooter">
                 <Button
