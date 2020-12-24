@@ -142,3 +142,64 @@ export const fetchWeekTasks = (userId, week, weekDay) => {
             });
     };
 };
+
+// Week Hours
+
+export const createWeekHoursStart = () => {
+    return {
+        type: actionTypes.CREATE_WEEK_HOURS_START
+    };
+};
+
+export const createWeekHoursSuccess = (id, weekHours) => {
+    return {
+        type: actionTypes.CREATE_WEEK_HOURS_SUCCESS,
+        id,
+        weekHours
+    };
+};
+
+export const createWeekHours = (weekHoursData) => {
+    return dispatch => {
+        dispatch(createWeekHoursStart());
+        db.collection('weekHours').doc(weekHoursData.userId.toString()).collection('hoursList').add(weekHoursData)
+            .then(() => {
+                if (weekHoursData.weekDay === new Date().getDay()) {
+                    dispatch(createWeekHoursSuccess(weekHoursData.id, weekHoursData))
+                }
+            })
+            .catch(err => {
+                dispatch(createTaskError(err));
+            });
+    };
+};
+
+export const getWeekHoursSuccess = (weekHours) => {
+    return {
+        type: actionTypes.FETCH_WEEK_HOURS_SUCCESS,
+        weekHours
+    }
+}
+
+export const getWeekHours = (userId, week, weekDay) => {
+    return dispatch => {
+        const weekComputed = week - weekDay;
+        
+        db.collection('weekHours').doc(userId.toString()).collection('hoursList').orderBy('weekDay', 'asc').where('week', '==', weekComputed).get()
+            .then(querySnapshot => {
+                const getWeekHours = [];
+                querySnapshot.forEach(function(res) {
+                    const addingId = {
+                        hoursId: res.id,
+                        ...res.data()
+                    }
+                    getWeekHours.push(addingId);
+                });
+                dispatch(getWeekHoursSuccess(getWeekHours));
+            })
+            .catch(err => {
+                console.log(err)
+                // dispatch(fetchTaskDetailFail(err));
+            });
+    };
+};

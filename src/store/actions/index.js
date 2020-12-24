@@ -10,7 +10,9 @@ export {
     createTask,
     fetchTaskDetail,
     fetchWeekTasks,
-    deleteTask
+    deleteTask,
+    createWeekHours,
+    getWeekHours
 } from './hoursCreation';
 
 export {

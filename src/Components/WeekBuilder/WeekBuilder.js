@@ -9,6 +9,7 @@ import Button from '../UI/Button/Button';
 import './WeekBuilder.css';
 
 const WeekBuilder = (props) => {
+    const selectedDayExist = props.weekHoursList.some(week => (week.weekDay === props.selectedDay));
     return (
         <Aux>
             <div className="WeekBuilderContent">
@@ -30,21 +31,30 @@ const WeekBuilder = (props) => {
 
                 { props.hoursListed && <HoursListed /> }
 
-                <div className="WeekHoursControl">
-                    <span className="controlHourTitle">Working Time</span>
-                    <div className="controlHour">
-                        <div className="controlHourInput">
-                            <input placeholder="Add Time" />
+                { props.weekControls && !selectedDayExist && (
+                    <div className="WeekHoursControl">
+                        <span className="controlHourTitle">Working Time</span>
+                        <div className="controlHour">
+                            <div className="controlHourInput">
+                                <input
+                                    onChange={props.dayHoursHandler}
+                                    defaultValue={props.dayHours}
+                                    type="number"
+                                    placeholder="Add Time" />
+                            </div>
+                            <Button
+                                clicked={props.addDayHourHandler}
+                                type="primary">
+                                Add
+                            </Button>
                         </div>
-                        <Button
-                            clicked={props.createTask}
-                            type="primary">
-                            Add
-                        </Button>
                     </div>
-                </div>
+                )}
 
-                { props.weekHours && <WeekHours /> }
+                { props.weekHours && 
+                    <WeekHours
+                        weekHoursList={props.weekHoursList} /> 
+                }
 
                 <span className="stitchings">
                     <span className="stitching"></span>

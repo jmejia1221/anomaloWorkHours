@@ -5,7 +5,8 @@ const initialState = {
     taskData: [],
     error: null,
     taskDataDetail: null,
-    weekTasks: []
+    weekTasks: [],
+    weekHoursList: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -60,6 +61,27 @@ const reducer = (state = initialState, action) => {
                 weekTasks: action.weekTasks,
                 loading: false
             };
+        case actionTypes.CREATE_WEEK_HOURS_START:
+            return {
+                ...state,
+                loading: true
+            };
+        case actionTypes.CREATE_WEEK_HOURS_SUCCESS:
+            const newWeekHours = {
+                ...action.weekHours,
+                id: action.id
+            };
+            return {
+                ...state,
+                loading: false,
+                weekHoursList: state.weekHours.concat(newWeekHours)
+            };
+        case actionTypes.FETCH_WEEK_HOURS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                weekHoursList: action.weekHours
+            }
     
         default:
             return state;

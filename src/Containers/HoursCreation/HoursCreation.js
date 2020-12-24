@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 import Aux from '../../hoc/Aux/Aux';
@@ -12,7 +12,7 @@ import AddTask from '../../Components/WeekBuilder/WeekControls/AddTask/AddTask';
 
 import * as actions from '../../store/actions';
 
-class HoursCreation extends Component {
+class HoursCreation extends PureComponent {
     state = {
         showModal: false,
         currentDate: Math.ceil((new Date().getTime()  / (1000 * 60 * 60 * 24))),
@@ -28,12 +28,18 @@ class HoursCreation extends Component {
         },
         selectedDay: '',
         task: '',
-        taskDaySelected: ''
+        taskDaySelected: '',
+        dayHours: 0
     }
 
     componentDidMount() {
         this.props.onFetchCurrentUser();
         this.props.onFetchWeekTasks(
+            this.props.userId,
+            this.state.currentDate,
+            this.state.currentDay
+        );
+        this.props.onFetchWeekHours(
             this.props.userId,
             this.state.currentDate,
             this.state.currentDay
@@ -101,6 +107,30 @@ class HoursCreation extends Component {
         });
     }
 
+    addDayHourHandler = () => {
+        const weekHoursData = {
+            dayHours: this.state.dayHours,
+            userId: this.props.userId,
+            id: new Date().getTime(),
+            week: this.state.currentDate - this.state.currentDay,
+            weekDay: this.state.selectedDay
+        };
+
+        this.props.onCreateWeekHours(weekHoursData);
+        this.props.onFetchWeekHours(
+            this.props.userId,
+            this.state.currentDate,
+            this.state.currentDay
+        );
+
+    }
+
+    dayHoursHandler = (event) => {
+        this.setState({
+            dayHours: event.target.value
+        });
+    }
+
     removeTaskHandler = (taskId) => {
         let time = {
             currentDate: this.state.currentDate,
@@ -131,6 +161,10 @@ class HoursCreation extends Component {
                         hidePanel={this.props.hidePanel}
                         togglePanel={this.props.togglePanel}>
                         <WeekBuilder
+                            weekHoursList={this.props.weekHoursList}
+                            addDayHourHandler={this.addDayHourHandler}
+                            dayHoursHandler={this.dayHoursHandler}
+                            dayHours={this.state.dayHours}
                             removeTaskHandler={this.removeTaskHandler}
                             selectedDay={this.state.selectedDay}
                             weekDayHandler={this.requestWeekDay}
@@ -160,7 +194,8 @@ const mapStateToProps = state => {
     return {
         weekTasks: state.hoursCreation.weekTasks,
         userId: state.auth.userId,
-        user: state.auth.currentUser
+        user: state.auth.currentUser,
+        weekHoursList: state.hoursCreation.weekHoursList
     };
 };
 
@@ -169,7 +204,9 @@ const mapDispatchToProps = dispatch => {
         onCreateTask: (taskData) => dispatch(actions.createTask(taskData)),
         onFetchCurrentUser: () => dispatch(actions.fetchCurrentUser()),
         onFetchWeekTasks: (userId, currentDate, currentDay) => dispatch(actions.fetchWeekTasks(userId, currentDate, currentDay)),
-        onDeleteTask: (userId, taskId, time) => dispatch(actions.deleteTask(userId, taskId, time))
+        onDeleteTask: (userId, taskId, time) => dispatch(actions.deleteTask(userId, taskId, time)),
+        onCreateWeekHours: (weekData) => dispatch(actions.createWeekHours(weekData)),
+        onFetchWeekHours: (userId, currentDate, currentDay) => dispatch(actions.getWeekHours(userId, currentDate, currentDay))
     }
 }
 

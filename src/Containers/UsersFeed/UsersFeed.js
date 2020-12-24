@@ -46,7 +46,7 @@ class UsersFeed extends PureComponent {
 
         if (!this.props.loading && this.props.teamUsers.length && this.props.taskDetails) {
             const userList = this.props.teamUsers;
-            if (userList !== undefined && userList !== undefined) {
+            if (userList !== undefined) {
                 renderUsers = <Users users={userList} />;
                 weekListUser = userList.map(user => {
                     return (
