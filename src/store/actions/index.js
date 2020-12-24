@@ -12,7 +12,8 @@ export {
     fetchWeekTasks,
     deleteTask,
     createWeekHours,
-    getWeekHours
+    getWeekHours,
+    updateWeekHours
 } from './hoursCreation';
 
 export {

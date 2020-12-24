@@ -56,6 +56,7 @@ const WeekBuilder = (props) => {
 
                 { props.weekHours && 
                     <WeekHours
+                        toggleHoursEditModal={props.toggleHoursEditModal}
                         weekHoursList={props.weekHoursList} /> 
                 }
 

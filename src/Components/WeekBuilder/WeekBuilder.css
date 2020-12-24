@@ -35,6 +35,7 @@
     margin: 5px 0 30px;
     border-bottom: 1px solid #eee;
     padding-bottom: 15px;
+    flex-wrap: wrap;
 }
 .WeekHoursControl .WeekHoursDay {
     padding: 10px 15px;

@@ -9,6 +9,7 @@ import WorkHistory from '../../Components/WorkHistory/WorkHistory';
 import WeekBuilder from '../../Components/WeekBuilder/WeekBuilder';
 import Modal from '../../Components/UI/Modal/Modal';
 import AddTask from '../../Components/WeekBuilder/WeekControls/AddTask/AddTask';
+import Button from '../../Components/UI/Button/Button';
 
 import * as actions from '../../store/actions';
 
@@ -29,7 +30,9 @@ class HoursCreation extends PureComponent {
         selectedDay: '',
         task: '',
         taskDaySelected: '',
-        dayHours: 0
+        dayHours: 0,
+        hoursEditModal: false,
+        weekDayHours: {}
     }
 
     componentDidMount() {
@@ -127,7 +130,23 @@ class HoursCreation extends PureComponent {
             this.state.currentDate,
             this.state.currentDay
         );
+    }
 
+    updateDayHourHander = () => {
+        const weekHoursData = {
+            dayHours: this.state.dayHours,
+            userId: this.state.weekDayHours.userId
+        };
+
+        const hoursId = this.state.weekDayHours.hoursId;
+
+        this.props.onUpdateWeekHours(weekHoursData, hoursId);
+        this.props.onFetchWeekHours(
+            this.props.userId,
+            this.state.currentDate,
+            this.state.currentDay
+        );
+        this.toggleHoursEditModal(null);
     }
 
     dayHoursHandler = (event) => {
@@ -142,6 +161,20 @@ class HoursCreation extends PureComponent {
             currentDay: this.state.selectedDay || this.state.currentDay
         }
         this.props.onDeleteTask(this.props.userId, taskId, time);
+    }
+
+    toggleHoursEditModal = (day) => {
+        this.setState({
+            dayHours: day !== null ? day.dayHours : 0,
+            weekDayHours: day !== null ? {
+                dayHours: day.dayHours,
+                hoursId: day.hoursId,
+                userId: day.userId
+            } : {}
+        });
+        this.setState(prevState => ({
+            hoursEditModal: !prevState.hoursEditModal
+        }));
     }
 
     render() {
@@ -166,6 +199,7 @@ class HoursCreation extends PureComponent {
                         hidePanel={this.props.hidePanel}
                         togglePanel={this.props.togglePanel}>
                         <WeekBuilder
+                            toggleHoursEditModal={this.toggleHoursEditModal}
                             weekHoursList={this.props.weekHoursList}
                             addDayHourHandler={this.addDayHourHandler}
                             dayHoursHandler={this.dayHoursHandler}
@@ -189,6 +223,29 @@ class HoursCreation extends PureComponent {
                         weekDayHandler={this.selectDayHandler}
                         taskHandler={this.taskHandler}
                         createTask={this.createTaskHandler} />
+
+                </Modal>
+                <Modal
+                    closeModal={this.toggleHoursEditModal}
+                    show={this.state.hoursEditModal}>
+                    <div className="WeekHoursControl">
+                        <h1 style={{width: '100%', margin: '10px 10px 30px'}} className="TaskTitle">Update hour time</h1>
+                        <span className="controlHourTitle">Working Time</span>
+                        <div className="controlHour">
+                            <div className="controlHourInput">
+                                <input
+                                    onChange={this.dayHoursHandler}
+                                    defaultValue={this.state.dayHours}
+                                    type="number"
+                                    placeholder="Add Time" />
+                            </div>
+                            <Button
+                                clicked={this.updateDayHourHander}
+                                type="primary">
+                                Update
+                            </Button>
+                        </div>
+                    </div>
                 </Modal>
             </Aux>
         );
@@ -211,7 +268,8 @@ const mapDispatchToProps = dispatch => {
         onFetchWeekTasks: (userId, currentDate, currentDay) => dispatch(actions.fetchWeekTasks(userId, currentDate, currentDay)),
         onDeleteTask: (userId, taskId, time) => dispatch(actions.deleteTask(userId, taskId, time)),
         onCreateWeekHours: (weekData) => dispatch(actions.createWeekHours(weekData)),
-        onFetchWeekHours: (userId, currentDate, currentDay) => dispatch(actions.getWeekHours(userId, currentDate, currentDay))
+        onFetchWeekHours: (userId, currentDate, currentDay) => dispatch(actions.getWeekHours(userId, currentDate, currentDay)),
+        onUpdateWeekHours: (weekHoursData, hoursId) => dispatch(actions.updateWeekHours(weekHoursData, hoursId))
     }
 }
 

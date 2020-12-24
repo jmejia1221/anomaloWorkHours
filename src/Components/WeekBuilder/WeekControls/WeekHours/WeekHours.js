@@ -19,7 +19,17 @@ const weekHours = (props) => {
             <ul className="WeekControlsList">
                 {newWeekDays.map((day, i) => {
                     return <WeekDay type="hours" key={i}>
-                        {day ? day.dayHours : weekDays[i]}
+                        {day ?
+                            <span>
+                                <span
+                                    onClick={() => props.toggleHoursEditModal(day)}
+                                    className="hourAdded">
+                                    {day.dayHours} | 
+                                </span>
+                                <span>{weekDays[i]}</span>
+                            </span> :
+                            weekDays[i]
+                        }
                     </WeekDay>
                 })}
             </ul>

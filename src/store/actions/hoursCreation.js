@@ -201,3 +201,14 @@ export const getWeekHours = (userId, week, weekDay) => {
             });
     };
 };
+
+export const updateWeekHours = (weekHoursData, hoursId) => {
+    return dispatch => {
+        const ref = db.collection('weekHours')
+            .doc(weekHoursData.userId.toString())
+            .collection('hoursList')
+            .doc(hoursId.toString());
+        
+        ref.update(weekHoursData);
+    }
+}
