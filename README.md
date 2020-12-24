@@ -1,3 +1,24 @@
+## Steps to install the project with firebase
+
+In the project directory, create a `.env` file and add the following variables:
+
+```
+REACT_APP_API_KEY=******
+REACT_APP_AUTH_DOMAIN=******
+REACT_APP_DATABASE_URL=******
+REACT_APP_PROJECT_ID=******
+REACT_APP_STORAGE_BUCKET=******
+REACT_APP_MESSAGIN_SENDER_ID=******
+REACT_APP_APP_ID=******
+REACT_APP_MEASUREMENT_ID=******
+```
+
+Then create a new project in firebase.
+
+After the project has been created go to `Project settings` in **Your Apps** create a new Web app.
+
+Finally go to **Firebase SDK snippet** select **Config** option and add the keys to the variables we'd created before.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
