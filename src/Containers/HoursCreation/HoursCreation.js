@@ -69,6 +69,11 @@ class HoursCreation extends PureComponent {
             '';
         let description = this.state.task.match(/([^(]*)/g)[0].trim();
 
+        const time = {
+            currentDate: this.state.currentDate,
+            currentDay: this.state.selectedDay || this.state.currentDay
+        }
+
         const taskData = {
             description: description,
             ticket: ticket,
@@ -78,7 +83,7 @@ class HoursCreation extends PureComponent {
             week: this.state.currentDate - this.state.taskDaySelected,
             weekDay: this.state.taskDaySelected
         };
-        this.props.onCreateTask(taskData);
+        this.props.onCreateTask(taskData, time);
         this.closeTaskHandler();
     }
 
@@ -132,9 +137,9 @@ class HoursCreation extends PureComponent {
     }
 
     removeTaskHandler = (taskId) => {
-        let time = {
+        const time = {
             currentDate: this.state.currentDate,
-            currentDay: this.state.currentDay
+            currentDay: this.state.selectedDay || this.state.currentDay
         }
         this.props.onDeleteTask(this.props.userId, taskId, time);
     }
@@ -201,7 +206,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onCreateTask: (taskData) => dispatch(actions.createTask(taskData)),
+        onCreateTask: (taskData, time) => dispatch(actions.createTask(taskData, time)),
         onFetchCurrentUser: () => dispatch(actions.fetchCurrentUser()),
         onFetchWeekTasks: (userId, currentDate, currentDay) => dispatch(actions.fetchWeekTasks(userId, currentDate, currentDay)),
         onDeleteTask: (userId, taskId, time) => dispatch(actions.deleteTask(userId, taskId, time)),

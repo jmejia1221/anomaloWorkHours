@@ -13,7 +13,7 @@ const WeekItem = (props) => {
     if (tasks !== undefined && tasks.length) {
         mapTasks = tasks.map(task => {
             return (
-                <li key={task.id} className="WeekItem">
+                <li key={task.taskId} className="WeekItem">
                     <span className="WeekDescription">{task.description}</span>
                     <span className="WeekTicket">
                         <span className="WeekItemTicket">
@@ -38,7 +38,6 @@ const WeekItem = (props) => {
                     ) }
                 </li>
             )
-            
         })
     }
 

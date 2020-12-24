@@ -22,14 +22,12 @@ export const createTaskError = (err) => {
     };
 };
 
-export const createTask = (taskData) => {
+export const createTask = (taskData, time) => {
     return dispatch => {
         dispatch(startTask());
         db.collection('tasks').doc(taskData.userId.toString()).collection('taskList').add(taskData)
             .then(() => {
-                if (taskData.weekDay === new Date().getDay()) {
-                    dispatch(createTaskSucces(taskData.id, taskData))
-                }
+                dispatch(fetchWeekTasks(taskData.userId, time.currentDate, time.currentDay));
             })
             .catch(err => {
                 dispatch(createTaskError(err));

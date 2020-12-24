@@ -1,5 +1,4 @@
 import React from 'react';
-import weekDay from '../WeekDay/WeekDay';
 
 import WeekDay from '../WeekDay/WeekDay';
 
@@ -10,11 +9,10 @@ const weekHours = (props) => {
 
     let newWeekDays = [];
     if (props.weekHoursList.length) {
-        newWeekDays = weekDays.map((weekDay, i) => {
+        newWeekDays = weekDays.map((_, i) => {
             return props.weekHoursList.filter(day => (day.weekDay === i))[0]
         });
-    } 
-    
+    }
 
     return (
         <div>

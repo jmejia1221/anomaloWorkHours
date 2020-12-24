@@ -27,9 +27,9 @@ const rootReducer = combineReducers({
 
 const store = createStore(
   rootReducer,
-  composeEnhancers(
-    applyMiddleware(thunk)
-  )
+  applyMiddleware(thunk)
+  // composeEnhancers(
+  // )
 );
 
 ReactDOM.render(
