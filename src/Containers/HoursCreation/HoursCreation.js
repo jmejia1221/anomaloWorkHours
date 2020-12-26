@@ -32,7 +32,8 @@ class HoursCreation extends PureComponent {
         taskDaySelected: '',
         dayHours: 0,
         hoursEditModal: false,
-        weekDayHours: {}
+        weekDayHours: {},
+        teamSelected: {}
     }
 
     componentDidMount() {
@@ -50,8 +51,10 @@ class HoursCreation extends PureComponent {
         this.setState({
             selectedDay: this.state.currentDay
         });
+        this.props.onFetchTeams(this.props.userId);
     }
 
+    // Task Modal
     addTaskHandler = () => {
         this.setState({showModal: true});
     }
@@ -60,6 +63,21 @@ class HoursCreation extends PureComponent {
         this.setState({showModal: false});
         this.setState({
             taskDaySelected: ''
+        });
+    }
+
+    // Create task in modal
+    selectDayHandler = (day) => {
+        this.setState({
+            taskDaySelected: this.state.weekDayValue[day]
+        });
+    }
+
+    taskHandler = (event) => {
+        let taskValue = event.target.value;
+
+        this.setState({
+            task: taskValue 
         });
     }
 
@@ -84,10 +102,20 @@ class HoursCreation extends PureComponent {
             id: new Date().getTime(),
             userId: this.props.userId,
             week: this.state.currentDate - this.state.taskDaySelected,
-            weekDay: this.state.taskDaySelected
+            weekDay: this.state.taskDaySelected,
+            team: {...this.state.teamSelected}
         };
         this.props.onCreateTask(taskData, time);
         this.closeTaskHandler();
+    }
+
+    // Tasks actions
+    removeTaskHandler = (taskId) => {
+        const time = {
+            currentDate: this.state.currentDate,
+            currentDay: this.state.selectedDay || this.state.currentDay
+        }
+        this.props.onDeleteTask(this.props.userId, taskId, time);
     }
 
     requestWeekDay = (day) => {
@@ -99,20 +127,6 @@ class HoursCreation extends PureComponent {
             this.state.currentDate,
             this.state.weekDayValue[day]
         );
-    }
-
-    selectDayHandler = (day) => {
-        this.setState({
-            taskDaySelected: this.state.weekDayValue[day]
-        });
-    }
-
-    taskHandler = (event) => {
-        let taskValue = event.target.value;
-
-        this.setState({
-            task: taskValue 
-        });
     }
 
     addDayHourHandler = () => {
@@ -155,14 +169,6 @@ class HoursCreation extends PureComponent {
         });
     }
 
-    removeTaskHandler = (taskId) => {
-        const time = {
-            currentDate: this.state.currentDate,
-            currentDay: this.state.selectedDay || this.state.currentDay
-        }
-        this.props.onDeleteTask(this.props.userId, taskId, time);
-    }
-
     toggleHoursEditModal = (day) => {
         this.setState({
             dayHours: day !== null ? day.dayHours : 0,
@@ -177,11 +183,39 @@ class HoursCreation extends PureComponent {
         }));
     }
 
+    // Teams actions
+    selectTeamHandler = (newTeam) => {
+        const {id, team, userId} = newTeam;
+        this.setState({
+            teamSelected: {
+                id,
+                team,
+                userId
+            }
+        });
+    }
+
     render() {
         let currentUserName = null;
+        let teams = null;
 
         if (this.props.user) {
             currentUserName = this.props.user.displayName;
+        }
+
+        if (this.props.teams) {
+            teams = (
+                <div className="TeamList">
+                    {this.props.teams.map(team => (
+                        <div
+                            onClick={() => this.selectTeamHandler(team)}
+                            className={`${this.state.teamSelected.id === team.id ? 'active' : ''} TeamListItem`}
+                            key={team.id}>
+                            {team.team}
+                        </div>
+                    ))}
+                </div>
+            );
         }
 
         return(
@@ -198,6 +232,8 @@ class HoursCreation extends PureComponent {
                         showFullScreenButton
                         hidePanel={this.props.hidePanel}
                         togglePanel={this.props.togglePanel}>
+                        {/* Make a component for this */}
+                        {teams}
                         <WeekBuilder
                             toggleHoursEditModal={this.toggleHoursEditModal}
                             weekHoursList={this.props.weekHoursList}
@@ -228,6 +264,7 @@ class HoursCreation extends PureComponent {
                 <Modal
                     closeModal={this.toggleHoursEditModal}
                     show={this.state.hoursEditModal}>
+                    {/* TODO: make a component for this also for the one in WeekBuilder */}
                     <div className="WeekHoursControl">
                         <h1 style={{width: '100%', margin: '10px 10px 30px'}} className="TaskTitle">Update hour time</h1>
                         <span className="controlHourTitle">Working Time</span>
@@ -257,7 +294,8 @@ const mapStateToProps = state => {
         weekTasks: state.hoursCreation.weekTasks,
         userId: state.auth.userId,
         user: state.auth.currentUser,
-        weekHoursList: state.hoursCreation.weekHoursList
+        weekHoursList: state.hoursCreation.weekHoursList,
+        teams: state.teamCreation.teams
     };
 };
 
@@ -269,7 +307,8 @@ const mapDispatchToProps = dispatch => {
         onDeleteTask: (userId, taskId, time) => dispatch(actions.deleteTask(userId, taskId, time)),
         onCreateWeekHours: (weekData) => dispatch(actions.createWeekHours(weekData)),
         onFetchWeekHours: (userId, currentDate, currentDay) => dispatch(actions.getWeekHours(userId, currentDate, currentDay)),
-        onUpdateWeekHours: (weekHoursData, hoursId) => dispatch(actions.updateWeekHours(weekHoursData, hoursId))
+        onUpdateWeekHours: (weekHoursData, hoursId) => dispatch(actions.updateWeekHours(weekHoursData, hoursId)),
+        onFetchTeams: (userId) => dispatch(actions.fetchTeams(userId)),
     }
 }
 

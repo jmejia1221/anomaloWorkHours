@@ -79,3 +79,28 @@
     line-height: 20px;
     margin-left: 5px;
 }
+
+
+/* change later */
+.TeamList {
+    display: flex;
+    margin-bottom: 25px;
+}
+.TeamListItem {
+    position: relative;
+    width: 150px;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 5px;
+    border: 4px solid #252941;
+    background-color: #fff;
+    box-shadow: 2px 2px 5px #ccc;
+    margin-right: 10px;
+    text-transform: capitalize;
+    font-weight: 600;
+    cursor: pointer;
+}
+.TeamListItem:hover,
+.TeamListItem.active {
+    border-color: #8547C4;
+}
