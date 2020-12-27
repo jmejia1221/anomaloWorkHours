@@ -23,6 +23,11 @@ class UsersFeed extends PureComponent {
             this.props.history.push('/teams');
         } else {
             this.props.onFetchTeamDetails(teamParams.id);
+            this.props.onFetchWeekHours(
+                this.props.userId,
+                this.state.currentDate,
+                this.state.currentDay
+            );
         }
     }
 
@@ -47,13 +52,19 @@ class UsersFeed extends PureComponent {
     render() {
         let weekListUser = null;
         let renderUsers = null;
+        let weekHourList = [];
         if (!this.props.loading && this.props.teamUsers.length && this.props.taskDetails) {
             const userList = this.props.teamUsers;
             if (userList !== undefined) {
                 renderUsers = <Users users={userList} />;
                 weekListUser = userList.map(user => {
+                    weekHourList = this.props.weekHoursList.filter(hour => {
+                        return hour.userId === user.userId;
+                    });
                     return (
                         <WeekBuilder
+                            hoursListEditable={false}
+                            weekHoursList={weekHourList}
                             isTaskDetails
                             taskDetails={this.props.taskDetails[user.userId]}
                             updateUserId={user.userId}
@@ -86,18 +97,21 @@ class UsersFeed extends PureComponent {
 
 const mapStateToProps = state => {
     return {
+        userId: state.auth.userId,
         teams: state.teamCreation.teams,
         loading: state.teamCreation.loading,
         teamDetails: state.teamCreation.teamDetails,
         teamUsers: state.teamCreation.teamUsers,
-        taskDetails: state.hoursCreation.taskDataDetail
+        taskDetails: state.hoursCreation.taskDataDetail,
+        weekHoursList: state.hoursCreation.weekHoursList
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onFetchTeamDetails: (teamId) => dispatch(actions.fetchTeamDetails(teamId)),
-        onFetchTaskDetails: (userId, week, weekDay, teamId) => dispatch(actions.fetchTaskDetail(userId, week, weekDay, teamId))
+        onFetchTaskDetails: (userId, week, weekDay, teamId) => dispatch(actions.fetchTaskDetail(userId, week, weekDay, teamId)),
+        onFetchWeekHours: (userId, currentDate, currentDay) => dispatch(actions.getWeekHours(userId, currentDate, currentDay)),
     };
 };
 

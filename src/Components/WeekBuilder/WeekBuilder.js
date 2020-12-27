@@ -3,7 +3,6 @@ import Aux from '../../hoc/Aux/Aux';
 import Weekcontrols from './WeekControls/WeekControls';
 import WeekList from './WeekList/WeekList';
 import WeekHours from './WeekControls/WeekHours/WeekHours';
-import HoursListed from './WeekControls/HoursListed/HoursListed';
 import Button from '../UI/Button/Button';
 
 import './WeekBuilder.css';
@@ -32,8 +31,6 @@ const WeekBuilder = (props) => {
                     taskDetails={props.taskDetails}
                     actions={props.actions} />
 
-                { props.hoursListed && <HoursListed /> }
-
                 { props.weekControls && !selectedDayExist && (
                     <div className="WeekHoursControl">
                         <span className="controlHourTitle">Working Time</span>
@@ -54,8 +51,9 @@ const WeekBuilder = (props) => {
                     </div>
                 )}
 
-                { props.weekHours && 
+                { (props.weekHours || props.hoursListed) && 
                     <WeekHours
+                        isEditable={props.hoursListEditable}
                         toggleHoursEditModal={props.toggleHoursEditModal}
                         weekHoursList={props.weekHoursList} /> 
                 }

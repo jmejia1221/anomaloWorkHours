@@ -135,7 +135,8 @@ class HoursCreation extends PureComponent {
             userId: this.props.userId,
             id: new Date().getTime(),
             week: this.state.currentDate - this.state.currentDay,
-            weekDay: this.state.selectedDay
+            weekDay: this.state.selectedDay,
+            teamId: this.state.teamSelected
         };
 
         this.props.onCreateWeekHours(weekHoursData);
@@ -146,7 +147,7 @@ class HoursCreation extends PureComponent {
         );
     }
 
-    updateDayHourHander = () => {
+    updateDayHourHandler = () => {
         const weekHoursData = {
             dayHours: this.state.dayHours,
             userId: this.state.weekDayHours.userId
@@ -230,6 +231,7 @@ class HoursCreation extends PureComponent {
                         {/* Make a component for this */}
                         {teams}
                         <WeekBuilder
+                            hoursListEditable={true}
                             toggleHoursEditModal={this.toggleHoursEditModal}
                             weekHoursList={this.props.weekHoursList}
                             addDayHourHandler={this.addDayHourHandler}
@@ -272,7 +274,7 @@ class HoursCreation extends PureComponent {
                                     placeholder="Add Time" />
                             </div>
                             <Button
-                                clicked={this.updateDayHourHander}
+                                clicked={this.updateDayHourHandler}
                                 type="primary">
                                 Update
                             </Button>

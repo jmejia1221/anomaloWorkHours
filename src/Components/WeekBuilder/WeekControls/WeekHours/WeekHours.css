@@ -1,3 +1,22 @@
+.WeekHoursContent {
+    display: flex;
+    justify-content: space-between;
+}
 .hourAdded {
     color: #8547C4;
+}
+.WeekTotalHours {
+    display: flex;
+    align-items: center;
+}
+.WeekTotalHours .total {
+    color: #fff;
+    background-color: #8547C4;
+    font-weight: bold;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    min-width: 40px;
+    text-align: center;
+    transition: all .5s ease-in-out;
 }
