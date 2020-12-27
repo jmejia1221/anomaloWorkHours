@@ -58,7 +58,6 @@ class TeamCreation extends Component {
             team: this.state.teamName,
             users: this.state.usersSelected,
             userId: this.props.userId,
-            id: new Date().getTime()
         };
         this.props.onCreateTeam(teamData);
         this.closeNewTeamModal();

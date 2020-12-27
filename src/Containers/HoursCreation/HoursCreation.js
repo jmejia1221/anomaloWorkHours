@@ -33,7 +33,7 @@ class HoursCreation extends PureComponent {
         dayHours: 0,
         hoursEditModal: false,
         weekDayHours: {},
-        teamSelected: {}
+        teamSelected: ''
     }
 
     componentDidMount() {
@@ -103,7 +103,7 @@ class HoursCreation extends PureComponent {
             userId: this.props.userId,
             week: this.state.currentDate - this.state.taskDaySelected,
             weekDay: this.state.taskDaySelected,
-            team: {...this.state.teamSelected}
+            team: this.state.teamSelected
         };
         this.props.onCreateTask(taskData, time);
         this.closeTaskHandler();
@@ -184,14 +184,9 @@ class HoursCreation extends PureComponent {
     }
 
     // Teams actions
-    selectTeamHandler = (newTeam) => {
-        const {id, team, userId} = newTeam;
+    selectTeamHandler = (id) => {
         this.setState({
-            teamSelected: {
-                id,
-                team,
-                userId
-            }
+            teamSelected: id
         });
     }
 
@@ -208,8 +203,8 @@ class HoursCreation extends PureComponent {
                 <div className="TeamList">
                     {this.props.teams.map(team => (
                         <div
-                            onClick={() => this.selectTeamHandler(team)}
-                            className={`${this.state.teamSelected.id === team.id ? 'active' : ''} TeamListItem`}
+                            onClick={() => this.selectTeamHandler(team.id)}
+                            className={`${this.state.teamSelected === team.id ? 'active' : ''} TeamListItem`}
                             key={team.id}>
                             {team.team}
                         </div>

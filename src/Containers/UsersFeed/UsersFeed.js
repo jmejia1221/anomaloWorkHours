@@ -35,7 +35,11 @@ class UsersFeed extends PureComponent {
     fetchTaskDetails = () => {
         if (this.props.teamUsers.length) {
             this.props.teamUsers.forEach(user => {
-                this.props.onFetchTaskDetails(user.userId, this.state.currentDate, this.state.currentDay);
+                this.props.onFetchTaskDetails(
+                    user.userId,
+                    this.state.currentDate,
+                    this.state.currentDay,
+                    this.props.match.params.id);
             });
         }
     }
@@ -43,7 +47,6 @@ class UsersFeed extends PureComponent {
     render() {
         let weekListUser = null;
         let renderUsers = null;
-
         if (!this.props.loading && this.props.teamUsers.length && this.props.taskDetails) {
             const userList = this.props.teamUsers;
             if (userList !== undefined) {
@@ -94,7 +97,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onFetchTeamDetails: (teamId) => dispatch(actions.fetchTeamDetails(teamId)),
-        onFetchTaskDetails: (userId, week, weekDay) => dispatch(actions.fetchTaskDetail(userId, week, weekDay))
+        onFetchTaskDetails: (userId, week, weekDay, teamId) => dispatch(actions.fetchTaskDetail(userId, week, weekDay, teamId))
     };
 };
 

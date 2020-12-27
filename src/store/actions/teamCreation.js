@@ -18,9 +18,13 @@ export const createTeamSuccess = (teamData) => {
 export const createTeam = (teamData) => {
     return dispatch => {
         dispatch(createTeamStart());
-        db.collection('teams').doc(teamData.id.toString()).set(teamData)
-            .then(() => {
-                dispatch(createTeamSuccess(teamData));
+        db.collection('teams').add(teamData)
+            .then((docs) => {
+                const teamWithId = {
+                    id: docs.id,
+                    ...teamData
+                }
+                dispatch(createTeamSuccess(teamWithId));
             })
             .catch(err => {
                 console.log('err', err);
@@ -128,7 +132,11 @@ export const fetchTeamDetails = (teamId) => {
         dispatch(fetchTeamDetailsStart());
         db.collection('teams').doc(teamId.toString()).get()
             .then(doc => {
-                dispatch(fetchTeamDetailsSuccess(doc.data(), doc.data().userId));
+                const dataWithId = {
+                    id: doc.id,
+                    ...doc.data()
+                };
+                dispatch(fetchTeamDetailsSuccess(dataWithId, doc.data().userId));
             })
             .catch(err => {
                 console.log('err', err)

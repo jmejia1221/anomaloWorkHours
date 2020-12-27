@@ -89,15 +89,25 @@ export const fetchTaskDetailFail = (err) => {
     };
 };
 
-export const fetchTaskDetail = (userId, week, weekDay) => {
+export const fetchTaskDetail = (userId, week, weekDay, teamId) => {
     return dispatch => {
         const weekComputed = week - weekDay;
         dispatch(fetchTaskDetailStart());
-        db.collection('tasks').doc(userId.toString()).collection('taskList').where('week', '==', weekComputed).where('weekDay', '==', weekDay).limit(50).get()
+        db.collection('tasks')
+            .doc(userId.toString())
+            .collection('taskList')
+            .where('week', '==', weekComputed)
+            .where('weekDay', '==', weekDay).limit(50)
+            .where('team', '==', teamId.toString())
+            .get()
             .then(querySnapshot => {
                 const fetchDataTask = [];
                 querySnapshot.forEach(function(res) {
-                    fetchDataTask.push(res.data());
+                    const addingId = {
+                        ...res.data(),
+                        taskId: res.id
+                    }
+                    fetchDataTask.push(addingId);
                 });
                 dispatch(fetchTaskDetailSuccess(fetchDataTask, userId));
             })
