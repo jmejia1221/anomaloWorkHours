@@ -231,7 +231,7 @@ class HoursCreation extends PureComponent {
                         {/* Make a component for this */}
                         {teams}
                         <WeekBuilder
-                            hoursListEditable={true}
+                            hoursListEditable
                             toggleHoursEditModal={this.toggleHoursEditModal}
                             weekHoursList={this.props.weekHoursList}
                             addDayHourHandler={this.addDayHourHandler}

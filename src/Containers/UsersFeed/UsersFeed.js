@@ -53,6 +53,7 @@ class UsersFeed extends PureComponent {
         let weekListUser = null;
         let renderUsers = null;
         let weekHourList = [];
+        let isSameTeam = false;
         if (!this.props.loading && this.props.teamUsers.length && this.props.taskDetails) {
             const userList = this.props.teamUsers;
             if (userList !== undefined) {
@@ -60,6 +61,9 @@ class UsersFeed extends PureComponent {
                 weekListUser = userList.map(user => {
                     weekHourList = this.props.weekHoursList.filter(hour => {
                         return hour.userId === user.userId;
+                    });
+                    isSameTeam = weekHourList.some(hours => {
+                        return hours.teamId === this.props.match.params.id;
                     });
                     return (
                         <WeekBuilder
@@ -70,7 +74,7 @@ class UsersFeed extends PureComponent {
                             updateUserId={user.userId}
                             key={user.userId}
                             name={user.name}
-                            hoursListed />
+                            hoursListed={isSameTeam} />
                     );
                 });
             }
