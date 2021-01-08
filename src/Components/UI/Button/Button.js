@@ -33,6 +33,7 @@ const Button = (props) => {
 
     return (
         <button
+            disabled={props.disabled}
             className={`Button ${buttonClass} ${props.class}`}
             onClick={props.clicked}>
             {props.icon && (

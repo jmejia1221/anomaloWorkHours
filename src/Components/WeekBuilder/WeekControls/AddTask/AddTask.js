@@ -6,6 +6,8 @@ import Button from '../../../UI/Button/Button';
 import './AddTask.css';
 
 const AddTask = (props) => {
+    let isButtonDisabled = !props.taskDaySelected || !props.taskValue;
+
     return (
         <div>
             <h1 className="TaskTitle">Add task</h1>
@@ -15,10 +17,11 @@ const AddTask = (props) => {
                 showTaskButton={false} />
             <span className="TaskExample">E.g. Description task (OP-#Ticket) [status]</span>
             <div className="TaskDescription">
-                <textarea onChange={props.taskHandler}></textarea>
+                <textarea value={props.taskValue} onChange={props.taskHandler}></textarea>
             </div>
             <div className="TaskFooter">
                 <Button
+                    disabled={isButtonDisabled}
                     clicked={props.createTask}
                     type="primary">
                     Add

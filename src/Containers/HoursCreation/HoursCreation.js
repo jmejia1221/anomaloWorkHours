@@ -201,7 +201,8 @@ class HoursCreation extends PureComponent {
 
         if (this.props.teams) {
             teams = (
-                <div className="TeamList">
+                <div
+                    className="TeamList">
                     {this.props.teams.map(team => (
                         <div
                             onClick={() => this.selectTeamHandler(team.id)}
@@ -252,6 +253,7 @@ class HoursCreation extends PureComponent {
                     show={this.state.showModal}
                     closeModal={this.closeTaskHandler}>
                     <AddTask
+                        taskValue={this.state.task}
                         taskDaySelected={this.state.taskDaySelected}
                         weekDayHandler={this.selectDayHandler}
                         taskHandler={this.taskHandler}
