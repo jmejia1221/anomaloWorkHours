@@ -1,0 +1,33 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "taskList",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "week",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "weekDay",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "taskList",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "weekDay",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "week",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
