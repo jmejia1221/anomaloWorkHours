@@ -8,7 +8,10 @@ const weekDay = (props) => {
     (props.type === 'hours') ?
         typeClass = 'WeekDayHours' :
         typeClass = 'weekDay'
-    return <li className={typeClass + activeClass}>{props.children}</li>;
+    return (
+    <li className={typeClass + activeClass}>
+            {props.children}
+    </li>);
 }
 
 export default weekDay;

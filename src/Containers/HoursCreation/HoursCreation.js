@@ -51,7 +51,7 @@ class HoursCreation extends PureComponent {
         this.setState({
             selectedDay: this.state.currentDay
         });
-        this.props.onFetchTeams(this.props.userId);
+        this.props.onFetchTeams();
     }
 
     // Task Modal
@@ -200,10 +200,14 @@ class HoursCreation extends PureComponent {
         }
 
         if (this.props.teams) {
+            let teamsBelong = this.props.teams.filter(team => {
+                let usersId = team.users.map(user => user.userId);
+                return usersId.includes(this.props.userId)
+            });
             teams = (
                 <div
                     className="TeamList">
-                    {this.props.teams.map(team => (
+                    {teamsBelong.map(team => (
                         <div
                             onClick={() => this.selectTeamHandler(team.id)}
                             className={`${this.state.teamSelected === team.id ? 'active' : ''} TeamListItem`}

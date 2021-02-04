@@ -93,6 +93,7 @@ export const fetchTaskDetail = (userId, week, weekDay, teamId) => {
     return dispatch => {
         const weekComputed = week - weekDay;
         dispatch(fetchTaskDetailStart());
+        debugger
         db.collection('tasks')
             .doc(userId.toString())
             .collection('taskList')
@@ -192,23 +193,22 @@ export const getWeekHoursSuccess = (weekHours) => {
 export const getWeekHours = (userId, week, weekDay) => {
     return dispatch => {
         const weekComputed = week - weekDay;
-        
-        db.collection('weekHours').doc(userId.toString()).collection('hoursList').orderBy('weekDay', 'asc').where('week', '==', weekComputed).get()
-            .then(querySnapshot => {
-                const getWeekHours = [];
-                querySnapshot.forEach(function(res) {
-                    const addingId = {
-                        hoursId: res.id,
-                        ...res.data()
-                    }
-                    getWeekHours.push(addingId);
-                });
-                dispatch(getWeekHoursSuccess(getWeekHours));
-            })
-            .catch(err => {
-                console.log(err)
-                // dispatch(fetchTaskDetailFail(err));
+        let ref = db.collection('weekHours').doc(userId.toString()).collection('hoursList').orderBy('weekDay', 'asc').where('week', '==', weekComputed).get();
+        ref.then(querySnapshot => {
+            const getWeekHours = [];
+            querySnapshot.forEach(function(res) {
+                const addingId = {
+                    hoursId: res.id,
+                    ...res.data()
+                }
+                getWeekHours.push(addingId);
             });
+            dispatch(getWeekHoursSuccess(getWeekHours));
+        })
+        .catch(err => {
+            console.log(err)
+            // dispatch(fetchTaskDetailFail(err));
+        });
     };
 };
 

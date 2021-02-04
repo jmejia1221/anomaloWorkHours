@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Aux from '../../hoc/Aux/Aux';
@@ -10,7 +10,7 @@ import Users from '../../Components/Users/Users';
 
 import * as actions from '../../store/actions';
 
-class UsersFeed extends PureComponent {
+class UsersFeed extends Component {
     state = {
         showModal: false,
         currentDate: Math.ceil((new Date().getTime()  / (1000 * 60 * 60 * 24))),
@@ -22,12 +22,7 @@ class UsersFeed extends PureComponent {
         if (teamParams.id === 'undefined') {
             this.props.history.push('/teams');
         } else {
-            this.props.onFetchTeamDetails(teamParams.id);
-            this.props.onFetchWeekHours(
-                this.props.userId,
-                this.state.currentDate,
-                this.state.currentDay
-            );
+            this.props.onFetchTeamDetails(teamParams.id, this.state.currentDate, this.state.currentDay);
         }
     }
 
@@ -52,29 +47,26 @@ class UsersFeed extends PureComponent {
     render() {
         let weekListUser = null;
         let renderUsers = null;
-        let weekHourList = [];
-        let isSameTeam = false;
+        console.log(this.props.taskDetails)
         if (!this.props.loading && this.props.teamUsers.length && this.props.taskDetails) {
-            const userList = this.props.teamUsers;
+            const userList = [...this.props.teamUsers];
             if (userList !== undefined) {
                 renderUsers = <Users users={userList} />;
                 weekListUser = userList.map(user => {
-                    weekHourList = this.props.weekHoursList.filter(hour => {
+                    const weekList = this.props.weekTeamHourList.filter(hour => {
                         return hour.userId === user.userId;
-                    });
-                    isSameTeam = weekHourList.some(hours => {
-                        return hours.teamId === this.props.match.params.id;
                     });
                     return (
                         <WeekBuilder
+                            weekDayHourHandler={this.fetchTaskDetails}
                             hoursListEditable={false}
-                            weekHoursList={weekHourList}
+                            weekHoursList={weekList}
                             isTaskDetails
                             taskDetails={this.props.taskDetails[user.userId]}
                             updateUserId={user.userId}
                             key={user.userId}
                             name={user.name}
-                            hoursListed={isSameTeam} />
+                            hoursListed={true} />
                     );
                 });
             }
@@ -107,15 +99,16 @@ const mapStateToProps = state => {
         teamDetails: state.teamCreation.teamDetails,
         teamUsers: state.teamCreation.teamUsers,
         taskDetails: state.hoursCreation.taskDataDetail,
-        weekHoursList: state.hoursCreation.weekHoursList
+        weekHoursList: state.hoursCreation.weekHoursList,
+        weekTeamHourList: state.teamCreation.weekTeamHourList
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchTeamDetails: (teamId) => dispatch(actions.fetchTeamDetails(teamId)),
+        onFetchTeamDetails: (teamId, week, weekDay) => dispatch(actions.fetchTeamDetails(teamId, week, weekDay)),
         onFetchTaskDetails: (userId, week, weekDay, teamId) => dispatch(actions.fetchTaskDetail(userId, week, weekDay, teamId)),
-        onFetchWeekHours: (userId, currentDate, currentDay) => dispatch(actions.getWeekHours(userId, currentDate, currentDay)),
+        onFetchWeekHours: (userId, currentDate, currentDay, callback) => dispatch(actions.getWeekHours(userId, currentDate, currentDay, callback)),
     };
 };
 

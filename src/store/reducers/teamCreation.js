@@ -4,7 +4,8 @@ const initialState = {
     loading: false,
     teams: [],
     teamDetails: [],
-    teamUsers: []
+    teamUsers: [],
+    weekTeamHourList: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -47,6 +48,12 @@ const reducer = (state = initialState, action) => {
                 loading: false,
                 teamDetails: state.teamDetails.concat(action.teamDetails),
                 teamUsers: state.teamUsers.concat(userDetails)
+            };
+        case actionTypes.FETCH_WEEK_TEAM_HOURS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                weekTeamHourList: state.weekTeamHourList.concat(action.weekTeamHourList)
             };
         default:
             return state;

@@ -38,7 +38,7 @@ const reducer = (state = initialState, action) => {
                 loading: true
             };
         case actionTypes.FETCH_TASK_DETAIL_SUCCESS:
-            const taskDetails =  {
+            const taskDetails = {
                 [action.taskUserId]: action.tasks
             };
             return {
