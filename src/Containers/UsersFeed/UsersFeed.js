@@ -14,7 +14,8 @@ class UsersFeed extends Component {
     state = {
         showModal: false,
         currentDate: Math.ceil((new Date().getTime()  / (1000 * 60 * 60 * 24))),
-        currentDay: new Date().getDay()
+        currentDay: new Date().getDay(),
+        weekList: {}
     }
 
     componentDidMount() {
@@ -26,50 +27,89 @@ class UsersFeed extends Component {
         }
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
         if (this.props.teamUsers !== prevProps.teamUsers) {
             this.fetchTaskDetails();
         }
+
+        if ((this.props.taskDetails !== prevProps.taskDetails) &&
+            (this.state.weekList === prevState.weekList)) {
+            this.setState(prevState => ({
+                weekList: {
+                    ...prevState.weekList,
+                    ...this.props.taskDetails
+                }
+            }));
+        }
     }
 
-    fetchTaskDetails = () => {
-        if (this.props.teamUsers.length) {
-            this.props.teamUsers.forEach(user => {
-                this.props.onFetchTaskDetails(
-                    user.userId,
-                    this.state.currentDate,
-                    this.state.currentDay,
-                    this.props.match.params.id);
-            });
+    fetchTaskDetails = (params) => {
+        if (params !== undefined) {
+            const {weekDay, userId} = params;
+            // this.setState({
+            //     selectedDay: this.state.weekDayValue[weekDay]
+            // });
+            if (this.props.teamUsers.length) {
+                this.props.teamUsers.forEach(user => {
+                    this.props.onFetchTaskDetails(
+                        userId,
+                        this.state.currentDate,
+                        weekDay,
+                        this.props.match.params.id);
+                });
+            }
+            for (const list in this.state.weekList) {
+                if (this.props.taskDetails[userId] === this.state.weekList[list]) {
+                    this.setState(prevState => ({
+                        weekList: {
+                            ...prevState.weekList,
+                            [list]: {...this.props.taskDetails[list]}
+                        }
+                    }))
+                }
+            }
+        } else {
+            if (this.props.teamUsers.length) {
+                this.props.teamUsers.forEach(user => {
+                    this.props.onFetchTaskDetails(
+                        user.userId,
+                        this.state.currentDate,
+                        this.state.currentDay,
+                        this.props.match.params.id);
+                });
+            }
         }
     }
 
     render() {
         let weekListUser = null;
         let renderUsers = null;
-        console.log(this.props.taskDetails)
-        if (!this.props.loading && this.props.teamUsers.length && this.props.taskDetails) {
-            const userList = [...this.props.teamUsers];
+        const userList = [...this.props.teamUsers];
+        if (!this.props.loading && userList.length) {
             if (userList !== undefined) {
                 renderUsers = <Users users={userList} />;
-                weekListUser = userList.map(user => {
-                    const weekList = this.props.weekTeamHourList.filter(hour => {
-                        return hour.userId === user.userId;
-                    });
-                    return (
-                        <WeekBuilder
-                            weekDayHourHandler={this.fetchTaskDetails}
-                            hoursListEditable={false}
-                            weekHoursList={weekList}
-                            isTaskDetails
-                            taskDetails={this.props.taskDetails[user.userId]}
-                            updateUserId={user.userId}
-                            key={user.userId}
-                            name={user.name}
-                            hoursListed={true} />
-                    );
-                });
             }
+        }
+
+        console.log('ByTeam', this.state.weekList);
+        if (!this.props.loading && userList.length) {
+            weekListUser = userList.map(user => {
+                const weekList = this.props.weekTeamHourList.filter(hour => {
+                    return hour.userId === user.userId;
+                });
+                return (
+                    <WeekBuilder
+                        weekDayHourHandler={this.fetchTaskDetails}
+                        hoursListEditable={false}
+                        weekHoursList={weekList}
+                        isTaskDetails
+                        taskDetails={this.state.weekList[user.userId]}
+                        updateUserId={user.userId}
+                        key={user.userId}
+                        name={user.name}
+                        hoursListed={true} />
+                );
+            });
         }
 
         return(

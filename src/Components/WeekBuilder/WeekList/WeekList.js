@@ -16,10 +16,16 @@ const WeekList = (props) => {
                 ) }
             </header>
             <ul className="ListContent">
-                <WeekItem
-                    removeTaskHandler={props.removeTaskHandler}
-                    taskDetails={props.taskDetails}
-                    actions={props.actions} />
+                {(props.taskDetails && props.taskDetails.length) ?
+                    props.taskDetails.map((task, i) => {
+                    return (
+                        <WeekItem
+                            key={i}
+                            removeTaskHandler={props.removeTaskHandler}
+                            taskDetails={task}
+                            actions={props.actions} />
+                    )
+                }) : null}
             </ul>
         </Aux>
     );

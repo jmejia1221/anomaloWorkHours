@@ -93,7 +93,6 @@ export const fetchTaskDetail = (userId, week, weekDay, teamId) => {
     return dispatch => {
         const weekComputed = week - weekDay;
         dispatch(fetchTaskDetailStart());
-        debugger
         db.collection('tasks')
             .doc(userId.toString())
             .collection('taskList')
