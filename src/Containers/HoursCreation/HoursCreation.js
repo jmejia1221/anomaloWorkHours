@@ -107,7 +107,7 @@ class HoursCreation extends PureComponent {
     // Tasks actions
     removeTaskHandler = (taskId) => {
         const time = {
-            currentDate: constant.CURRENT_DATE,
+            currentDate: constant.COMPUTED_TIME,
             currentDay: this.state.selectedDay || constant.CURRENT_DAY
         }
         this.props.onDeleteTask(this.props.userId, taskId, time);
