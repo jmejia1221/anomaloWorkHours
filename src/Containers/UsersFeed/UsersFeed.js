@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
+// Components
 import Aux from '../../hoc/Aux/Aux';
 import Panels from '../../Components/UI/Panels/Panels';
 import LeftPanel from '../../Components/UI/Panels/LeftPanel/LeftPanel';
@@ -8,13 +8,15 @@ import RightPanel from '../../Components/UI/Panels/RightPanel/RightPanel';
 import WeekBuilder from '../../Components/WeekBuilder/WeekBuilder';
 import Users from '../../Components/Users/Users';
 
+// Redux
+import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
+
+// Constants
+import * as constant from '../../Shared/constants';
 
 class UsersFeed extends Component {
     state = {
-        showModal: false,
-        currentDate: Math.ceil((new Date().getTime()  / (1000 * 60 * 60 * 24))),
-        currentDay: new Date().getDay(),
         weekList: {}
     }
 
@@ -23,7 +25,7 @@ class UsersFeed extends Component {
         if (teamParams.id === 'undefined') {
             this.props.history.push('/teams');
         } else {
-            this.props.onFetchTeamDetails(teamParams.id, this.state.currentDate, this.state.currentDay);
+            this.props.onFetchTeamDetails(teamParams.id, constant.COMPUTED_TIME, constant.CURRENT_DAY);
         }
     }
 
@@ -53,7 +55,7 @@ class UsersFeed extends Component {
                 this.props.teamUsers.forEach(user => {
                     this.props.onFetchTaskDetails(
                         userId,
-                        this.state.currentDate,
+                        constant.COMPUTED_TIME,
                         weekDay,
                         this.props.match.params.id);
                 });
@@ -73,8 +75,8 @@ class UsersFeed extends Component {
                 this.props.teamUsers.forEach(user => {
                     this.props.onFetchTaskDetails(
                         user.userId,
-                        this.state.currentDate,
-                        this.state.currentDay,
+                        constant.COMPUTED_TIME,
+                        constant.CURRENT_DAY,
                         this.props.match.params.id);
                 });
             }
@@ -91,7 +93,6 @@ class UsersFeed extends Component {
             }
         }
 
-        console.log('ByTeam', this.state.weekList);
         if (!this.props.loading && userList.length) {
             weekListUser = userList.map(user => {
                 const weekList = this.props.weekTeamHourList.filter(hour => {

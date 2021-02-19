@@ -89,9 +89,8 @@ export const fetchTaskDetailFail = (err) => {
     };
 };
 
-export const fetchTaskDetail = (userId, week, weekDay, teamId) => {
+export const fetchTaskDetail = (userId, weekComputed, weekDay, teamId) => {
     return dispatch => {
-        const weekComputed = week - weekDay;
         dispatch(fetchTaskDetailStart());
         db.collection('tasks')
             .doc(userId.toString())

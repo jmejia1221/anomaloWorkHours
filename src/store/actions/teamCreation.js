@@ -129,9 +129,8 @@ export const fetchWeekHourTeamuccess = (teamData) => {
     };
 };
 
-export const fetchWeekHourTeam = (userId, week, weekDay) => {
+export const fetchWeekHourTeam = (userId, weekComputed, weekDay) => {
     return dispatch => {
-        const weekComputed = week - weekDay;
         let ref = db.collection('weekHours').doc(userId.toString()).collection('hoursList').orderBy('weekDay', 'asc').where('week', '==', weekComputed).get();
         ref.then(querySnapshot => {
             const getWeekHours = [];
