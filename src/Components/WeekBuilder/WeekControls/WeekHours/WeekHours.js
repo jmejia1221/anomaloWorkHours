@@ -25,7 +25,7 @@ const weekHours = (props) => {
                     return (
                         <WeekDay type="hours" key={i}>
                             {day ?
-                                <span onClick={() => props.weekDayHourHandler(day)}>
+                                <span>
                                     { props.isEditable ? (
                                         <span
                                             onClick={() => props.toggleHoursEditModal(day)}
@@ -33,7 +33,9 @@ const weekHours = (props) => {
                                             {day.dayHours} | 
                                         </span>
                                     ) : (
-                                        <span className="hourAdded">
+                                        <span
+                                            onClick={() => props.weekDayHourHandler(day)}
+                                            className="hourAdded">
                                             {day.dayHours} |
                                         </span>
                                     )}

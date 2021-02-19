@@ -132,9 +132,8 @@ export const fetchWeekTasksSuccess = (weekTasks) => {
     }
 }
 
-export const fetchWeekTasks = (userId, week, weekDay) => {
+export const fetchWeekTasks = (userId, weekComputed, weekDay) => {
     return dispatch => {
-        const weekComputed = week - weekDay;
         dispatch(fetchWeekTasksStart());
         db.collection('tasks').doc(userId.toString()).collection('taskList').where('week', '==', weekComputed).where('weekDay', '==', weekDay).limit(50).get()
             .then(querySnapshot => {
@@ -189,9 +188,8 @@ export const getWeekHoursSuccess = (weekHours) => {
     }
 }
 
-export const getWeekHours = (userId, week, weekDay) => {
+export const getWeekHours = (userId, weekComputed, weekDay) => {
     return dispatch => {
-        const weekComputed = week - weekDay;
         let ref = db.collection('weekHours').doc(userId.toString()).collection('hoursList').orderBy('weekDay', 'asc').where('week', '==', weekComputed).get();
         ref.then(querySnapshot => {
             const getWeekHours = [];
