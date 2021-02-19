@@ -1,10 +1,5 @@
 import React, { PureComponent } from 'react';
 
-// Libs
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import isoWeekDay from 'dayjs/plugin/isoWeek';
-
 // Components
 import Aux from '../../hoc/Aux/Aux';
 import Panels from '../../Components/UI/Panels/Panels';
@@ -20,23 +15,8 @@ import Button from '../../Components/UI/Button/Button';
 import * as actions from '../../store/actions';
 import { connect } from 'react-redux';
 
-// Dayjs extended plugins
-dayjs.extend(utc);
-dayjs.extend(isoWeekDay);
-
 // Constants
-const CURRENT_DATE = dayjs();
-const CURRENT_DAY = dayjs().day();
-const COMPUTED_TIME = CURRENT_DATE.subtract(CURRENT_DAY, 'day').format('DD/MM/YYYY');
-const WEEKDAY_VALUE = {
-    'SU': 0,
-    'M': 1,
-    'TU': 2,
-    'W': 3,
-    'TH': 4,
-    'F': 5,
-    'SA': 6
-}
+import * as constant from '../../Shared/constants';
 class HoursCreation extends PureComponent {
     state = {
         showModal: false,
@@ -53,16 +33,16 @@ class HoursCreation extends PureComponent {
         this.props.onFetchCurrentUser();
         this.props.onFetchWeekTasks(
             this.props.userId,
-            COMPUTED_TIME,
-            CURRENT_DAY
+            constant.COMPUTED_TIME,
+            constant.CURRENT_DAY
         );
         this.props.onFetchWeekHours(
             this.props.userId,
-            COMPUTED_TIME,
-            CURRENT_DAY
+            constant.COMPUTED_TIME,
+            constant.CURRENT_DAY
         );
         this.setState({
-            selectedDay: CURRENT_DAY
+            selectedDay: constant.CURRENT_DAY
         });
         this.props.onFetchTeams();
     }
@@ -83,7 +63,7 @@ class HoursCreation extends PureComponent {
     // Create task in modal
     selectDayHandler = (day) => {
         this.setState({
-            taskDaySelected: WEEKDAY_VALUE[day]
+            taskDaySelected: constant.WEEKDAY_VALUE[day]
         });
     }
 
@@ -105,8 +85,8 @@ class HoursCreation extends PureComponent {
         let description = this.state.task.match(/([^(]*)/g)[0].trim();
 
         const time = {
-            currentDate: COMPUTED_TIME,
-            currentDay: this.state.selectedDay || CURRENT_DAY
+            currentDate: constant.COMPUTED_TIME,
+            currentDay: this.state.selectedDay || constant.CURRENT_DAY
         }
 
         const taskData = {
@@ -115,7 +95,7 @@ class HoursCreation extends PureComponent {
             status: status,
             id: new Date().getTime(),
             userId: this.props.userId,
-            week: COMPUTED_TIME,
+            week: constant.COMPUTED_TIME,
             weekDay: this.state.taskDaySelected,
             team: this.state.teamSelected
         };
@@ -127,20 +107,20 @@ class HoursCreation extends PureComponent {
     // Tasks actions
     removeTaskHandler = (taskId) => {
         const time = {
-            currentDate: CURRENT_DATE,
-            currentDay: this.state.selectedDay || CURRENT_DAY
+            currentDate: constant.CURRENT_DATE,
+            currentDay: this.state.selectedDay || constant.CURRENT_DAY
         }
         this.props.onDeleteTask(this.props.userId, taskId, time);
     }
 
     requestWeekDay = (day) => {
         this.setState({
-            selectedDay: WEEKDAY_VALUE[day]
+            selectedDay: constant.WEEKDAY_VALUE[day]
         });
         this.props.onFetchWeekTasks(
             this.props.userId,
-            COMPUTED_TIME,
-            WEEKDAY_VALUE[day]
+            constant.COMPUTED_TIME,
+            constant.WEEKDAY_VALUE[day]
         );
     }
 
@@ -149,7 +129,7 @@ class HoursCreation extends PureComponent {
             dayHours: this.state.dayHours,
             userId: this.props.userId,
             id: new Date().getTime(),
-            week: COMPUTED_TIME,
+            week: constant.COMPUTED_TIME,
             weekDay: this.state.selectedDay,
             teamId: this.state.teamSelected
         };
@@ -157,8 +137,8 @@ class HoursCreation extends PureComponent {
         this.props.onCreateWeekHours(weekHoursData);
         this.props.onFetchWeekHours(
             this.props.userId,
-            COMPUTED_TIME,
-            CURRENT_DAY
+            constant.COMPUTED_TIME,
+            constant.CURRENT_DAY
         );
     }
 
@@ -173,8 +153,8 @@ class HoursCreation extends PureComponent {
         this.props.onUpdateWeekHours(weekHoursData, hoursId);
         this.props.onFetchWeekHours(
             this.props.userId,
-            COMPUTED_TIME,
-            CURRENT_DAY
+            constant.COMPUTED_TIME,
+            constant.CURRENT_DAY
         );
         this.toggleHoursEditModal(null);
     }
