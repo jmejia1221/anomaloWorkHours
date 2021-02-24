@@ -18,4 +18,4 @@ export const WEEKDAY_VALUE = {
     'TH': 4,
     'F': 5,
     'SA': 6
-}
+};

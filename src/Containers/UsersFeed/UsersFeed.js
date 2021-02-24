@@ -48,9 +48,6 @@ class UsersFeed extends Component {
     fetchTaskDetails = (params) => {
         if (params !== undefined) {
             const {weekDay, userId} = params;
-            // this.setState({
-            //     selectedDay: this.state.weekDayValue[weekDay]
-            // });
             if (this.props.teamUsers.length) {
                 this.props.teamUsers.forEach(user => {
                     this.props.onFetchTaskDetails(
@@ -140,7 +137,6 @@ const mapStateToProps = state => {
         teamDetails: state.teamCreation.teamDetails,
         teamUsers: state.teamCreation.teamUsers,
         taskDetails: state.hoursCreation.taskDataDetail,
-        weekHoursList: state.hoursCreation.weekHoursList,
         weekTeamHourList: state.teamCreation.weekTeamHourList
     }
 }
@@ -148,8 +144,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onFetchTeamDetails: (teamId, week, weekDay) => dispatch(actions.fetchTeamDetails(teamId, week, weekDay)),
-        onFetchTaskDetails: (userId, week, weekDay, teamId) => dispatch(actions.fetchTaskDetail(userId, week, weekDay, teamId)),
-        onFetchWeekHours: (userId, currentDate, currentDay, callback) => dispatch(actions.getWeekHours(userId, currentDate, currentDay, callback)),
+        onFetchTaskDetails: (userId, week, weekDay, teamId) => dispatch(actions.fetchTaskDetail(userId, week, weekDay, teamId))
     };
 };
 

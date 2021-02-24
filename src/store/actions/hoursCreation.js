@@ -187,7 +187,7 @@ export const getWeekHoursSuccess = (weekHours) => {
     }
 }
 
-export const getWeekHours = (userId, weekComputed, weekDay) => {
+export const getWeekHours = (userId, weekComputed) => {
     return dispatch => {
         let ref = db.collection('weekHours').doc(userId.toString()).collection('hoursList').orderBy('weekDay', 'asc').where('week', '==', weekComputed).get();
         ref.then(querySnapshot => {

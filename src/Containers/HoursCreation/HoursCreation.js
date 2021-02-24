@@ -91,8 +91,8 @@ class HoursCreation extends PureComponent {
 
         const taskData = {
             description: description,
-            ticket: ticket,
-            status: status,
+            ticket: ticket ? ticket : 'NO-TICKET',
+            status: status ? status : 'Open',
             id: new Date().getTime(),
             userId: this.props.userId,
             week: constant.COMPUTED_TIME,
@@ -302,7 +302,7 @@ const mapDispatchToProps = dispatch => {
         onFetchWeekTasks: (userId, currentDate, currentDay) => dispatch(actions.fetchWeekTasks(userId, currentDate, currentDay)),
         onDeleteTask: (userId, taskId, time) => dispatch(actions.deleteTask(userId, taskId, time)),
         onCreateWeekHours: (weekData) => dispatch(actions.createWeekHours(weekData)),
-        onFetchWeekHours: (userId, currentDate, currentDay) => dispatch(actions.getWeekHours(userId, currentDate, currentDay)),
+        onFetchWeekHours: (userId, currentDate) => dispatch(actions.getWeekHours(userId, currentDate)),
         onUpdateWeekHours: (weekHoursData, hoursId) => dispatch(actions.updateWeekHours(weekHoursData, hoursId)),
         onFetchTeams: (userId) => dispatch(actions.fetchTeams(userId)),
     }

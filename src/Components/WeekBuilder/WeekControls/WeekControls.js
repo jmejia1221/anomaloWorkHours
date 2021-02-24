@@ -12,7 +12,7 @@ const WeekControls = (props) => {
             <strong className="WeekControlsTitle">Day</strong>
             <ul className="WeekControlsList">
                 {weekDays.map((day, i) => {
-                    let hasDay = day === weekDays[props.selectedDay] ? true : false;
+                    let hasDay = day === weekDays[props.selectedDay];
                     return (
                         <WeekDay
                             hasDay={hasDay ? 'active' : ''}
