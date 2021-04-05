@@ -1,9 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import Aux from '../../hoc/Aux/Aux';
 import Weekcontrols from './WeekControls/WeekControls';
-import WeekList from './WeekList/WeekList';
 import WeekHours from './WeekControls/WeekHours/WeekHours';
 import Button from '../UI/Button/Button';
 
@@ -15,7 +13,7 @@ const WeekBuilder = (props) => {
         selectedDayExist = props.weekHoursList.some(week => (week.weekDay === props.selectedDay));
     }
     return (
-        <Aux>
+        <>
             <div className="WeekBuilderContent">
                 <h1 className="WeekBuilderName">
                     { props.name }
@@ -29,11 +27,7 @@ const WeekBuilder = (props) => {
                         addTask={props.addTask} />
                 )}
 
-                <WeekList
-                    userId={props.updateUserId}
-                    removeTaskHandler={props.removeTaskHandler}
-                    taskDetails={props.taskDetails}
-                    actions={props.actions} />
+                {props.children}
 
                 { props.weekControls && !selectedDayExist && (
                     <div className="WeekHoursControl">
@@ -69,7 +63,7 @@ const WeekBuilder = (props) => {
                     <span className="stitching"></span>
                 </span>
             </div>
-        </Aux>
+        </>
     )
 }
 

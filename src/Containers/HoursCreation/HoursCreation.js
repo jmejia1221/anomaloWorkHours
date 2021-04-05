@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 
 // Components
-import Aux from '../../hoc/Aux/Aux';
 import Panels from '../../Components/UI/Panels/Panels';
 import LeftPanel from '../../Components/UI/Panels/LeftPanel/LeftPanel';
 import RightPanel from '../../Components/UI/Panels/RightPanel/RightPanel';
@@ -10,6 +9,7 @@ import WeekBuilder from '../../Components/WeekBuilder/WeekBuilder';
 import Modal from '../../Components/UI/Modal/Modal';
 import AddTask from '../../Components/WeekBuilder/WeekControls/AddTask/AddTask';
 import Button from '../../Components/UI/Button/Button';
+import WeekList from '../../Components/WeekBuilder/WeekList/WeekList';
 
 // Redux
 import * as actions from '../../store/actions';
@@ -26,7 +26,8 @@ class HoursCreation extends PureComponent {
         dayHours: 0,
         hoursEditModal: false,
         weekDayHours: {},
-        teamSelected: ''
+        teamSelected: '',
+        isEditTask: false
     }
 
     componentDidMount() {
@@ -56,7 +57,8 @@ class HoursCreation extends PureComponent {
         this.setState({
             showModal: false,
             taskDaySelected: '',
-            task: ''
+            task: '',
+            isEditTask: false
         });
     }
 
@@ -111,6 +113,16 @@ class HoursCreation extends PureComponent {
             currentDay: this.state.selectedDay || constant.CURRENT_DAY
         }
         this.props.onDeleteTask(this.props.userId, taskId, time);
+    }
+
+    editTaskHandler = (task) => {
+        const taskString = `${task.description} (${task.ticket}) [${task.status}]`;
+        this.setState({
+            showModal: true,
+            isEditTask: true,
+            task: taskString,
+            taskDaySelected: task.weekDay
+        });
     }
 
     requestWeekDay = (day) => {
@@ -213,7 +225,7 @@ class HoursCreation extends PureComponent {
         }
 
         return(
-            <Aux>
+            <>
                 <Panels>
                     <LeftPanel
                         hidePanel={this.props.hidePanel}
@@ -235,27 +247,30 @@ class HoursCreation extends PureComponent {
                             addDayHourHandler={this.addDayHourHandler}
                             dayHoursHandler={this.dayHoursHandler}
                             dayHours={this.state.dayHours}
-                            removeTaskHandler={this.removeTaskHandler}
                             selectedDay={this.state.selectedDay}
                             weekDayHandler={this.requestWeekDay}
-                            taskDetails={this.props.weekTasks}
                             addTask={this.openTaskModal}
                             name={currentUserName}
                             weekControls
-                            weekHours
-                            actions />
+                            weekHours>
+                            <WeekList
+                                openTaskModal={this.editTaskHandler}
+                                removeTaskHandler={this.removeTaskHandler}
+                                taskDetails={this.props.weekTasks}
+                                actions />
+                        </WeekBuilder>
                     </RightPanel>
                 </Panels>
                 <Modal
                     show={this.state.showModal}
                     closeModal={this.closeTaskModal}>
                     <AddTask
+                        isEditTask={this.state.isEditTask}
                         taskValue={this.state.task}
                         taskDaySelected={this.state.taskDaySelected}
                         weekDayHandler={this.selectDayHandler}
                         taskHandler={this.taskHandler}
                         createTask={this.createTaskHandler} />
-
                 </Modal>
                 <Modal
                     closeModal={this.toggleHoursEditModal}
@@ -280,7 +295,7 @@ class HoursCreation extends PureComponent {
                         </div>
                     </div>
                 </Modal>
-            </Aux>
+            </>
         );
     }
 }

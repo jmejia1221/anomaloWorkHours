@@ -21,6 +21,7 @@ const WeekList = (props) => {
                     return (
                         <WeekItem
                             key={i}
+                            openTaskModal={props.openTaskModal}
                             removeTaskHandler={props.removeTaskHandler}
                             taskDetails={task}
                             actions={props.actions} />

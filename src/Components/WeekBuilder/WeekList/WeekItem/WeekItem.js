@@ -26,7 +26,10 @@ const WeekItem = (props) => {
                 { props.actions && (
                     <span className="WeekCheck">
                         <span className="WeekItemAction">
-                            <FontAwesomeIcon className='iconAction' icon={faEdit} />
+                            <FontAwesomeIcon
+                                onClick={() => props.openTaskModal(task)}
+                                className='iconAction'
+                                icon={faEdit} />
                             <FontAwesomeIcon
                                 onClick={() => props.removeTaskHandler(task.taskId)}
                                 className='iconAction'

@@ -35,6 +35,17 @@ export const createTask = (taskData, time) => {
     };
 };
 
+export const updateTask = (taskData, taskId) => {
+    return dispatch => {
+        const ref = db.collection('tasks')
+            .doc(taskData.userId.toString())
+            .collection('taskList')
+            .doc(taskId.toString());
+        
+        ref.update(taskData);
+    }
+}
+
 // ========= Delete task
 
 export const deleteTaskSucces = (id, taskData) => {

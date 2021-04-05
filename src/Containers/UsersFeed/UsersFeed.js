@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
 // Components
-import Aux from '../../hoc/Aux/Aux';
 import Panels from '../../Components/UI/Panels/Panels';
 import LeftPanel from '../../Components/UI/Panels/LeftPanel/LeftPanel';
 import RightPanel from '../../Components/UI/Panels/RightPanel/RightPanel';
 import WeekBuilder from '../../Components/WeekBuilder/WeekBuilder';
 import Users from '../../Components/Users/Users';
+import WeekList from '../../Components/WeekBuilder/WeekList/WeekList';
 
 // Redux
 import { connect } from 'react-redux';
@@ -101,17 +101,19 @@ class UsersFeed extends Component {
                         hoursListEditable={false}
                         weekHoursList={weekList}
                         isTaskDetails
-                        taskDetails={this.state.weekList[user.userId]}
-                        updateUserId={user.userId}
                         key={user.userId}
                         name={user.name}
-                        hoursListed={true} />
+                        hoursListed={true}>
+                        <WeekList
+                            userId={user.userId}
+                            taskDetails={this.state.weekList[user.userId]} />
+                    </WeekBuilder>
                 );
             });
         }
 
         return(
-            <Aux>
+            <>
                 <Panels>
                     <LeftPanel
                         title="Anomalo List"
@@ -124,7 +126,7 @@ class UsersFeed extends Component {
                         {weekListUser}
                     </RightPanel>
                 </Panels>
-            </Aux>
+            </>
         );
     }
 }

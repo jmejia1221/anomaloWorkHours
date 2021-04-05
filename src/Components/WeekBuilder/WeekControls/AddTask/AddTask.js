@@ -5,26 +5,32 @@ import Button from '../../../UI/Button/Button';
 
 import './AddTask.css';
 
-const AddTask = (props) => {
-    let isButtonDisabled = !props.taskDaySelected || !props.taskValue;
-
+const AddTask = ({
+    taskDaySelected = null,
+    taskValue,
+    isEditTask,
+    createTask,
+    weekDayHandler,
+    taskHandler
+}) => {
+    let isButtonDisabled = taskDaySelected === null || !taskValue;
     return (
         <div>
             <h1 className="TaskTitle">Add task</h1>
             <Weekcontrols
-                selectedDay={props.taskDaySelected}
-                weekDayHandler={props.weekDayHandler}
+                selectedDay={taskDaySelected}
+                weekDayHandler={weekDayHandler}
                 showTaskButton={false} />
             <span className="TaskExample">E.g. Description task (OP-#Ticket) [status]</span>
             <div className="TaskDescription">
-                <textarea value={props.taskValue} onChange={props.taskHandler}></textarea>
+                <textarea value={taskValue} onChange={taskHandler}></textarea>
             </div>
             <div className="TaskFooter">
                 <Button
                     disabled={isButtonDisabled}
-                    clicked={props.createTask}
+                    clicked={createTask}
                     type="primary">
-                    Add
+                    {isEditTask ? 'Update' : 'Add'}
                 </Button>
             </div>
         </div>
