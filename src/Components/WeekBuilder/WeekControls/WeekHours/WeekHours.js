@@ -1,21 +1,28 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import WeekDay from '../WeekDay/WeekDay';
 
 import './WeekHours.css';
 
-const weekHours = (props) => {
+const WeekHours = (props) => {
     const weekDays = ['SU', 'M', 'TU', 'W', 'TH', 'F', 'SA'];
+    const [totalHours, setTotalHours] = useState(0)
 
     let newWeekDays = [];
-    let total = null;
+
+    useEffect(() => {
+        if (props.weekHoursList.length) {
+            const total = props.weekHoursList
+                .map(day => parseInt(day.dayHours))
+                .reduce((sum, hour) => sum + hour);
+            setTotalHours(total)
+        }
+    }, [props.weekHoursList])
+
     if (props.weekHoursList.length) {
         newWeekDays = weekDays.map((_, i) => {
             return props.weekHoursList.filter(day => (day.weekDay === i))[0]
         });
-        total = props.weekHoursList
-            .map(day => parseInt(day.dayHours))
-            .reduce((sum, hour) => sum + hour);
     }
 
     return (
