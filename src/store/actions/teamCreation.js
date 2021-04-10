@@ -114,15 +114,15 @@ export const fetchTeams = (userId) => {
     };
 };
 
-// ========= Testing
+// ========= Get Team work Hours List
 
 export const fetchWeekHourTeamStart = () => {
     return {
-        type: actionTypes.FETCH_TEAM_START
-    };
-};
+        type: actionTypes.FETCH_WEEK_TEAM_HOURS_START
+    }
+}
 
-export const fetchWeekHourTeamuccess = (teamData) => {
+export const fetchWeekHourTeamSuccess = (teamData) => {
     return {
         type: actionTypes.FETCH_WEEK_TEAM_HOURS_SUCCESS,
         weekTeamHourList: teamData
@@ -131,6 +131,7 @@ export const fetchWeekHourTeamuccess = (teamData) => {
 
 export const fetchWeekHourTeam = (userId, weekComputed) => {
     return dispatch => {
+        dispatch(fetchWeekHourTeamStart())
         let ref = db.collection('weekHours').doc(userId.toString()).collection('hoursList').orderBy('weekDay', 'asc').where('week', '==', weekComputed).get();
         ref.then(querySnapshot => {
             const getWeekHours = [];
@@ -141,7 +142,7 @@ export const fetchWeekHourTeam = (userId, weekComputed) => {
                 }
                 getWeekHours.push(addingId);
             });
-            dispatch(fetchWeekHourTeamuccess(getWeekHours));
+            dispatch(fetchWeekHourTeamSuccess(getWeekHours));
         })
         .catch(err => {
             console.log(err)

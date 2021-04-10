@@ -49,6 +49,11 @@ const reducer = (state = initialState, action) => {
                 teamDetails: state.teamDetails.concat(action.teamDetails),
                 teamUsers: state.teamUsers.concat(userDetails)
             };
+        case actionTypes.FETCH_WEEK_TEAM_HOURS_START:
+            return {
+                ...state,
+                weekTeamHourList: []
+            }
         case actionTypes.FETCH_WEEK_TEAM_HOURS_SUCCESS:
             return {
                 ...state,
