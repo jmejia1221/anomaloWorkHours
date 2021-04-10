@@ -10,6 +10,7 @@ const AddTask = ({
     taskValue,
     isEditTask,
     createTask,
+    editTask,
     weekDayHandler,
     taskHandler
 }) => {
@@ -26,12 +27,21 @@ const AddTask = ({
                 <textarea value={taskValue} onChange={taskHandler}></textarea>
             </div>
             <div className="TaskFooter">
-                <Button
-                    disabled={isButtonDisabled}
-                    clicked={createTask}
-                    type="primary">
-                    {isEditTask ? 'Update' : 'Add'}
-                </Button>
+                { !isEditTask ? (
+                    <Button
+                        disabled={isButtonDisabled}
+                        clicked={createTask}
+                        type="primary">
+                        Add
+                    </Button>
+                ) : (
+                    <Button
+                        disabled={isButtonDisabled}
+                        clicked={editTask}
+                        type="primary">
+                        Update
+                    </Button>
+                )}
             </div>
         </div>
     )

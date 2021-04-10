@@ -8,10 +8,9 @@ import Button from '../UI/Button/Button';
 import './WeekBuilder.css';
 
 const WeekBuilder = (props) => {
-    let selectedDayExist = null; 
-    if (props.weekHoursList) {
-        selectedDayExist = props.weekHoursList.some(week => (week.weekDay === props.selectedDay));
-    }
+    let selectedDayExist = props.weekHoursList
+        .some(week => (week.weekDay === props.selectedDay));
+
     return (
         <>
             <div className="WeekBuilderContent">

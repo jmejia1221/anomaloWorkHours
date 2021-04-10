@@ -7,14 +7,6 @@ export const startTask = () => {
     };
 };
 
-export const createTaskSucces = (id, taskData) => {
-    return {
-        type: actionTypes.CREATE_TASK_SUCCESS,
-        taskId: id,
-        weekTasks: taskData
-    };
-};
-
 export const createTaskError = (err) => {
     return {
         type: actionTypes.CREATE_TASK_FAIL,
@@ -35,13 +27,14 @@ export const createTask = (taskData, time) => {
     };
 };
 
-export const updateTask = (taskData, taskId) => {
+export const updateTask = (taskData, taskId, time) => {
     return dispatch => {
         const ref = db.collection('tasks')
             .doc(taskData.userId.toString())
             .collection('taskList')
             .doc(taskId.toString());
-        
+
+        dispatch(fetchWeekTasks(taskData.userId, time.currentDate, time.currentDay));
         ref.update(taskData);
     }
 }

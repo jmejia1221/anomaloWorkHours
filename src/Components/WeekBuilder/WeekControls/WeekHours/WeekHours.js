@@ -30,7 +30,7 @@ const weekHours = (props) => {
                                         <span
                                             onClick={() => props.toggleHoursEditModal(day)}
                                             className="hourAdded">
-                                            {day.dayHours} | 
+                                            {day.dayHours} |
                                         </span>
                                     ) : (
                                         <span
@@ -46,14 +46,12 @@ const weekHours = (props) => {
                         </WeekDay>)
                 })}
             </ul>
-            { total && (
-                <div className="WeekTotalHours">
-                    <strong>Total: </strong>
-                    <span className="total">{total}</span>
-                </div>
-            )}
+            <div className="WeekTotalHours">
+                <strong>Total: </strong>
+                <span className="total">{totalHours}</span>
+            </div>
         </div>
     );
 };
 
-export default weekHours;
+export default WeekHours;

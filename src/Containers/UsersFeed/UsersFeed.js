@@ -89,7 +89,6 @@ class UsersFeed extends Component {
                 renderUsers = <Users users={userList} />;
             }
         }
-
         if (!this.props.loading && userList.length) {
             weekListUser = userList.map(user => {
                 const weekList = this.props.weekTeamHourList.filter(hour => {

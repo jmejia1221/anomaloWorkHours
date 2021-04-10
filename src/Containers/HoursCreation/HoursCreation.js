@@ -27,7 +27,8 @@ class HoursCreation extends PureComponent {
         hoursEditModal: false,
         weekDayHours: {},
         teamSelected: '',
-        isEditTask: false
+        isEditTask: false,
+        taskId: ''
     }
 
     componentDidMount() {
@@ -39,8 +40,7 @@ class HoursCreation extends PureComponent {
         );
         this.props.onFetchWeekHours(
             this.props.userId,
-            constant.COMPUTED_TIME,
-            constant.CURRENT_DAY
+            constant.COMPUTED_TIME
         );
         this.setState({
             selectedDay: constant.CURRENT_DAY
@@ -77,14 +77,14 @@ class HoursCreation extends PureComponent {
         });
     }
 
-    createTaskHandler = () => {
-        let ticket = this.state.task.match(/\(([^)]+)\)/) ?
+    bundleTaskData = (callback) => {
+        const ticket = this.state.task.match(/\(([^)]+)\)/) ?
             this.state.task.match(/\(([^)]+)\)/)[1].trim() :
             '';
-        let status = this.state.task.match(/\[(.*?)\]/) ?
+        const status = this.state.task.match(/\[(.*?)\]/) ?
             this.state.task.match(/\[(.*?)\]/)[1].trim() :
             '';
-        let description = this.state.task.match(/([^(]*)/g)[0].trim();
+        const description = this.state.task.match(/([^(]*)/g)[0].trim();
 
         const time = {
             currentDate: constant.COMPUTED_TIME,
@@ -95,14 +95,25 @@ class HoursCreation extends PureComponent {
             description: description,
             ticket: ticket ? ticket : 'NO-TICKET',
             status: status ? status : 'Open',
-            id: new Date().getTime(),
             userId: this.props.userId,
             week: constant.COMPUTED_TIME,
             weekDay: this.state.taskDaySelected,
             team: this.state.teamSelected
         };
 
-        this.props.onCreateTask(taskData, time);
+        callback(taskData, time);
+    }
+    createTaskHandler = () => {
+        this.bundleTaskData((taskData, time) => {
+            this.props.onCreateTask(taskData, time);
+        })
+        this.closeTaskModal();
+    }
+
+    updateTaskHandler = () => {
+        this.bundleTaskData((taskData, time) => {
+            this.props.onUpdateTask(taskData, this.state.taskId, time)
+        })
         this.closeTaskModal();
     }
 
@@ -115,12 +126,13 @@ class HoursCreation extends PureComponent {
         this.props.onDeleteTask(this.props.userId, taskId, time);
     }
 
-    editTaskHandler = (task) => {
+    editTaskModalHandler = (task) => {
         const taskString = `${task.description} (${task.ticket}) [${task.status}]`;
         this.setState({
             showModal: true,
             isEditTask: true,
             task: taskString,
+            taskId: task.taskId,
             taskDaySelected: task.weekDay
         });
     }
@@ -254,7 +266,7 @@ class HoursCreation extends PureComponent {
                             weekControls
                             weekHours>
                             <WeekList
-                                openTaskModal={this.editTaskHandler}
+                                openTaskModal={this.editTaskModalHandler}
                                 removeTaskHandler={this.removeTaskHandler}
                                 taskDetails={this.props.weekTasks}
                                 actions />
@@ -270,7 +282,8 @@ class HoursCreation extends PureComponent {
                         taskDaySelected={this.state.taskDaySelected}
                         weekDayHandler={this.selectDayHandler}
                         taskHandler={this.taskHandler}
-                        createTask={this.createTaskHandler} />
+                        createTask={this.createTaskHandler}
+                        editTask={this.updateTaskHandler} />
                 </Modal>
                 <Modal
                     closeModal={this.toggleHoursEditModal}
@@ -320,6 +333,7 @@ const mapDispatchToProps = dispatch => {
         onFetchWeekHours: (userId, currentDate) => dispatch(actions.getWeekHours(userId, currentDate)),
         onUpdateWeekHours: (weekHoursData, hoursId) => dispatch(actions.updateWeekHours(weekHoursData, hoursId)),
         onFetchTeams: (userId) => dispatch(actions.fetchTeams(userId)),
+        onUpdateTask: (taskData, taskId, time) => dispatch(actions.updateTask(taskData, taskId, time))
     }
 }
 

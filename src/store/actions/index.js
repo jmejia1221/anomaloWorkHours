@@ -13,7 +13,8 @@ export {
     deleteTask,
     createWeekHours,
     getWeekHours,
-    updateWeekHours
+    updateWeekHours,
+    updateTask
 } from './hoursCreation';
 
 export {

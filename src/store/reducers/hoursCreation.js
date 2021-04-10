@@ -16,16 +16,6 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading: true
             };
-        case actionTypes.CREATE_TASK_SUCCESS:
-            const newTask = {
-                ...action.weekTasks,
-                id: action.taskId
-            };
-            return {
-                ...state,
-                loading: false,
-                weekTasks: state.weekTasks.concat(newTask)
-            };
         case actionTypes.CREATE_TASK_FAIL:
             return {
                 ...state,
