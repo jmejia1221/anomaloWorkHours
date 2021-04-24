@@ -90,9 +90,10 @@ class UsersFeed extends Component {
             }
         }
         if (!this.props.loading && userList.length) {
+            const teamParams = this.props.match.params;
             weekListUser = userList.map(user => {
                 const weekList = this.props.weekTeamHourList.filter(hour => {
-                    return hour.userId === user.userId;
+                    return (hour.userId === user.userId && teamParams.id === hour.teamId);
                 });
                 return (
                     <WeekBuilder
