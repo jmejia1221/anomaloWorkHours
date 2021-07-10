@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react';
 
+// External libs
+import {faVoteYea} from "@fortawesome/free-solid-svg-icons";
+
 // Components
 import Panels from '../../Components/UI/Panels/Panels';
 import LeftPanel from '../../Components/UI/Panels/LeftPanel/LeftPanel';
@@ -10,6 +13,7 @@ import Modal from '../../Components/UI/Modal/Modal';
 import AddTask from '../../Components/WeekBuilder/WeekControls/AddTask/AddTask';
 import Button from '../../Components/UI/Button/Button';
 import WeekList from '../../Components/WeekBuilder/WeekList/WeekList';
+import NoItemSelected from '../../Components/NoItemSelected/NoItemSelected';
 
 // Redux
 import * as actions from '../../store/actions';
@@ -17,6 +21,7 @@ import { connect } from 'react-redux';
 
 // Constants
 import * as constant from '../../Shared/constants';
+
 class HoursCreation extends PureComponent {
     state = {
         showModal: false,
@@ -236,6 +241,36 @@ class HoursCreation extends PureComponent {
             );
         }
 
+        let renderWeekBuilder = (
+            <NoItemSelected
+                icon={faVoteYea}
+                text="You need to select a team to build your work hours" />
+        );
+
+        if (this.state.teamSelected) {
+            renderWeekBuilder = (
+                <WeekBuilder
+                    hoursListEditable
+                    toggleHoursEditModal={this.toggleHoursEditModal}
+                    weekHoursList={this.props.weekHoursList}
+                    addDayHourHandler={this.addDayHourHandler}
+                    dayHoursHandler={this.dayHoursHandler}
+                    dayHours={this.state.dayHours}
+                    selectedDay={this.state.selectedDay}
+                    weekDayHandler={this.requestWeekDay}
+                    addTask={this.openTaskModal}
+                    name={currentUserName}
+                    weekControls
+                    weekHours>
+                    <WeekList
+                        openTaskModal={this.editTaskModalHandler}
+                        removeTaskHandler={this.removeTaskHandler}
+                        taskDetails={this.props.weekTasks}
+                        actions />
+                </WeekBuilder>
+            );
+        }
+
         return(
             <>
                 <Panels>
@@ -251,26 +286,8 @@ class HoursCreation extends PureComponent {
                         hidePanel={this.props.hidePanel}
                         togglePanel={this.props.togglePanel}>
                         {/* Make a component for this */}
-                        {teams}
-                        <WeekBuilder
-                            hoursListEditable
-                            toggleHoursEditModal={this.toggleHoursEditModal}
-                            weekHoursList={this.props.weekHoursList}
-                            addDayHourHandler={this.addDayHourHandler}
-                            dayHoursHandler={this.dayHoursHandler}
-                            dayHours={this.state.dayHours}
-                            selectedDay={this.state.selectedDay}
-                            weekDayHandler={this.requestWeekDay}
-                            addTask={this.openTaskModal}
-                            name={currentUserName}
-                            weekControls
-                            weekHours>
-                            <WeekList
-                                openTaskModal={this.editTaskModalHandler}
-                                removeTaskHandler={this.removeTaskHandler}
-                                taskDetails={this.props.weekTasks}
-                                actions />
-                        </WeekBuilder>
+                        { teams }
+                        { renderWeekBuilder }
                     </RightPanel>
                 </Panels>
                 <Modal
