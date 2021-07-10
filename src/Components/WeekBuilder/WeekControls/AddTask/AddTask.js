@@ -15,6 +15,20 @@ const AddTask = ({
     taskHandler
 }) => {
     let isButtonDisabled = taskDaySelected === null || !taskValue;
+    let textAreaRender = (
+        <span className="TaskExample">Select a day</span>
+    );
+
+    if (taskDaySelected) {
+        textAreaRender = (
+            <>
+                <span className="TaskExample">E.g. Description task (OP-#Ticket) [status]</span>
+                <div className="TaskDescription">
+                    <textarea value={taskValue} onChange={taskHandler} />
+                </div>
+            </>
+        )
+    }
     return (
         <div>
             <h1 className="TaskTitle">Add task</h1>
@@ -22,10 +36,7 @@ const AddTask = ({
                 selectedDay={taskDaySelected}
                 weekDayHandler={weekDayHandler}
                 showTaskButton={false} />
-            <span className="TaskExample">E.g. Description task (OP-#Ticket) [status]</span>
-            <div className="TaskDescription">
-                <textarea value={taskValue} onChange={taskHandler}></textarea>
-            </div>
+            {textAreaRender}
             <div className="TaskFooter">
                 { !isEditTask ? (
                     <Button
