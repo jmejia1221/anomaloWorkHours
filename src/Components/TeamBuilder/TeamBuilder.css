@@ -105,6 +105,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: all .5s;
+    font-size: 1rem;
 }
 .TeamListItem:hover,
 .TeamListItem.active {

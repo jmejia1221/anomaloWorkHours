@@ -14,6 +14,7 @@ import AddTask from '../../Components/WeekBuilder/WeekControls/AddTask/AddTask';
 import Button from '../../Components/UI/Button/Button';
 import WeekList from '../../Components/WeekBuilder/WeekList/WeekList';
 import NoItemSelected from '../../Components/NoItemSelected/NoItemSelected';
+import Spinner from "../../Components/UI/Spinner";
 
 // Redux
 import * as actions from '../../store/actions';
@@ -33,7 +34,8 @@ class HoursCreation extends PureComponent {
         weekDayHours: {},
         teamSelected: '',
         isEditTask: false,
-        taskId: ''
+        taskId: '',
+        weekTasksByTeam: []
     }
 
     componentDidMount() {
@@ -208,20 +210,26 @@ class HoursCreation extends PureComponent {
 
     // Teams actions
     selectTeamHandler = (id) => {
+        const weekTasks = [...this.props.weekTasks];
+        const filterWeekTasksByTeam = weekTasks.filter(weekTask => {
+            return weekTask.team === id
+        });
         this.setState({
-            teamSelected: id
+            teamSelected: id,
+            weekTasksByTeam: filterWeekTasksByTeam
         });
     }
 
     render() {
         let currentUserName = null;
-        let teams = null;
+        let teams = <Spinner />;
+        let renderWeekBuilder = null;
 
         if (this.props.user) {
             currentUserName = this.props.user.displayName;
         }
 
-        if (this.props.teams) {
+        if (this.props.teams.length) {
             let teamsBelong = this.props.teams.filter(team => {
                 let usersId = team.users.map(user => user.userId);
                 return usersId.includes(this.props.userId)
@@ -230,22 +238,21 @@ class HoursCreation extends PureComponent {
                 <div
                     className="TeamList">
                     {teamsBelong.map(team => (
-                        <div
+                        <button
                             onClick={() => this.selectTeamHandler(team.id)}
                             className={`${this.state.teamSelected === team.id ? 'active' : ''} TeamListItem`}
                             key={team.id}>
                             {team.team}
-                        </div>
+                        </button>
                     ))}
                 </div>
             );
+            renderWeekBuilder = (
+                <NoItemSelected
+                    icon={faVoteYea}
+                    text="You need to select a team to build your work hours" />
+            );
         }
-
-        let renderWeekBuilder = (
-            <NoItemSelected
-                icon={faVoteYea}
-                text="You need to select a team to build your work hours" />
-        );
 
         if (this.state.teamSelected) {
             renderWeekBuilder = (
@@ -265,7 +272,7 @@ class HoursCreation extends PureComponent {
                     <WeekList
                         openTaskModal={this.editTaskModalHandler}
                         removeTaskHandler={this.removeTaskHandler}
-                        taskDetails={this.props.weekTasks}
+                        taskDetails={this.state.weekTasksByTeam}
                         actions />
                 </WeekBuilder>
             );

@@ -1,8 +1,14 @@
 import React from 'react';
 
+// External libs
+import {faVoteYea} from "@fortawesome/free-solid-svg-icons";
+
+// Components
 import Weekcontrols from '../WeekControls';
 import Button from '../../../UI/Button/Button';
+import NoItemSelected from "../../../NoItemSelected/NoItemSelected";
 
+// CSS
 import './AddTask.css';
 
 const AddTask = ({
@@ -16,10 +22,17 @@ const AddTask = ({
 }) => {
     let isButtonDisabled = taskDaySelected === null || !taskValue;
     let textAreaRender = (
-        <span className="TaskExample">Select a day</span>
+        <NoItemSelected
+            style={{
+                maxWidth: '10rem',
+                margin: '1rem auto',
+                transform: 'none'
+            }}
+            icon={faVoteYea}
+            text="Select a day to add a task" />
     );
 
-    if (taskDaySelected) {
+    if (taskDaySelected || taskDaySelected === 0) {
         textAreaRender = (
             <>
                 <span className="TaskExample">E.g. Description task (OP-#Ticket) [status]</span>

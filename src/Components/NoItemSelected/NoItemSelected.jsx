@@ -4,9 +4,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 // CSS
 import './NoItemSelected.css'
 
-const NoItemSelected = ({ icon, text }) => {
+const NoItemSelected = ({ icon, text, style }) => {
     return (
-        <div className="no-team-selected">
+        <div style={style} className="no-team-selected">
             <FontAwesomeIcon
                 className="selectIcon"
                 icon={icon} />
