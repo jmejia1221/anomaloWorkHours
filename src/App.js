@@ -10,7 +10,7 @@ import LoginPage from './Containers/Login/LoginPage';
 import TeamCreation from './Containers/TeamCreation/TeamCreation';
 import Profile from './Containers/Profile/Profile';
 
-import * as actions from './store/actions';
+import { checkAuthState } from './store/actions';
 
 import './App.css';
 
@@ -75,7 +75,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onTryLogin: () => dispatch(actions.checkAuthState())
+    onTryLogin: () => dispatch(checkAuthState())
   };
 };
 
